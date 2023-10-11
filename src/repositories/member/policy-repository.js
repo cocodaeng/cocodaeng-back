@@ -12,9 +12,6 @@ exports.findPolicyConsent = (connection, memberNo) => {
           reject(err);
         }
         if (result.length === 0) {
-          console.log("asdfafsdf");
-          // err = new Error("일치하는 회원이 없습니다.");
-          // reject(err);
           resolve(null);
         }
 
@@ -27,12 +24,20 @@ exports.findPolicyConsent = (connection, memberNo) => {
 
 exports.updatePolicyConsent = (connection, policyUpdateRequestDTO) => {
   return new Promise((resolve, reject) => {
+    console.log(
+      "updatePolicyConsent repository",
+      JSON.stringify(policyUpdateRequestDTO)
+    );
+    console.log(policyUpdateRequestDTO);
     connection.query(
       PolicyQuery.updatePolicyConsent(),
-      [policyUpdateRequestDTO.memberNo, policyUpdateRequestDTO.PolicyConsent],
+      [policyUpdateRequestDTO.memberNo, policyUpdateRequestDTO.policyConsent],
       (error, result) => {
         if (error) {
           reject(err);
+        }
+        if (result.affectedRows === 0) {
+          resolve(null);
         }
         resolve(result);
       }
