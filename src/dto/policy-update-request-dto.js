@@ -1,4 +1,4 @@
-class policyUpdateRequestDTO {
+class PolicyUpdateRequestDTO {
   memberNo;
   policyConsent;
 
@@ -15,3 +15,4 @@ class policyUpdateRequestDTO {
     this.policyConsent = policyConsent;
   }
 }
+module.exports = PolicyUpdateRequestDTO;

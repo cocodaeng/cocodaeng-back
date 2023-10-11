@@ -33,12 +33,12 @@ exports.findPolicyConsent = (memberNo) => {
   });
 };
 
-// 회
+// 회원 번호로 이용 정책 동의 여부 업데이트
 exports.updatePolicyConsent = (policyUpdateRequestDTO) => {
-  return new Promise(async (resolve) => {
+  return new Promise(async (resolve, reject) => {
     const connection = getConnection();
     connection.beginTransaction();
-
+    console.log("updatePolicyConsent result: ", policyUpdateRequestDTO);
     try {
       const result = await PolicyRepository.updatePolicyConsent(
         connection,

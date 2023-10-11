@@ -1,9 +1,9 @@
 // 회원 번호로 이용 정책 동의 여부 조회
 exports.findPolicyConsent = () => {
   return `
-        SELECT policyConsent
+        SELECT policy_consent
           FROM TBL_MEMBER
-         WHERE memberNo = ?
+         WHERE member_no = ?
     `;
 };
 
@@ -11,7 +11,7 @@ exports.findPolicyConsent = () => {
 exports.updatePolicyConsent = () => {
   return `
       UPDATE TBL_MEMBER
-         SET policyConsent =?
-       WHERE memberNo =?
+         SET policy_consent =?
+       WHERE member_no =?
     `;
 };
