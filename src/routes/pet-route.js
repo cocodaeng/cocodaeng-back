@@ -7,6 +7,6 @@ const PetController = require("../controllers/pet/pet-controller");
 router.get("/findAllBreads", BreadController.findAllBreads);
 
 // pet
-router.post("/createPet", PetController.createPet);
+// router.post("/createPet", PetController.createPet);
 
 module.exports = router;

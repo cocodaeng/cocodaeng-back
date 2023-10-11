@@ -24,8 +24,10 @@ exports.findPolicyConsent = (memberNo) => {
         memberNo
       );
       console.log("service단 findPolicyConsent result: ", result);
+      connection.commit();
       resolve(result);
     } catch (err) {
+      connection.rollback();
       reject(err);
     } finally {
       connection.end();
