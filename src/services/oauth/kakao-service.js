@@ -1,14 +1,14 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 const jwt = require("jsonwebtoken");
-const getConnection = require("../../database/connection");
 const KakaoAPI = require("../../apis/oauth/kakao-api");
 const KakaoDTO = require("../../dto/kakao-dto");
 const MemberService = require("../../services/member/member-service");
-const secretKey = require("../../config/jwt.js");
 
 // 카카오 로그인
 exports.kakaoLogin = (code) => {
-  const connection = getConnection();
-
+  const secretKey = process.env.SECRET_KEY;
   const expiresIn = process.env.JWT_EXP;
   const issuer = process.env.JWT_ISSUER;
   const option = { expiresIn, issuer };
@@ -22,8 +22,6 @@ exports.kakaoLogin = (code) => {
     const payload = {
       member_no: memberInfo.member_no,
       member_name: memberInfo.member_name,
-      // kakao_id: memberInfo.kakao_id,
-      // apple_id: memberInfo.apple_id,
       photo_agree_status: memberInfo.photo_agree_status,
       policy_consent: memberInfo.policy_consent,
     };
