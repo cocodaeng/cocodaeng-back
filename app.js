@@ -1,6 +1,5 @@
 const express = require("express");
 const morgan = require("morgan");
-const HttpStatus = require("http-status");
 
 const app = express();
 
