@@ -9,6 +9,7 @@ const secretKey = require("../../config/jwt.js");
 exports.kakaoLogin = (code) => {
   const connection = getConnection();
 
+  // const secretKey = process.env.SECRET_KEY;
   const expiresIn = process.env.JWT_EXP;
   const issuer = process.env.JWT_ISSUER;
   const option = { expiresIn, issuer };
