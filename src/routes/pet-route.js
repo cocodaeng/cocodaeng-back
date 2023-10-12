@@ -6,6 +6,6 @@ const PetController = require("../controllers/pet/pet-controller");
 /*
     펫 조회
 */
-router.get("/findPet", PetController.findPet);
+router.get("/findPet", auth, PetController.findPet);
 
 module.exports = router;
