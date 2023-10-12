@@ -4,9 +4,13 @@ const BreadController = require("../controllers/pet/bread-controller");
 const PetController = require("../controllers/pet/pet-controller");
 
 // bread
-router.get("/findAllBreads", BreadController.findAllBreads);
+router.get("/bread", BreadController.findAllBreads);
+router.get("/bread/:breadNo", BreadController.findBreadByBreadNo);
+router.post("/bread", BreadController.createBread);
+router.put("/bread/:breadNo", BreadController.updateBread);
+router.delete("/bread/:breadNo", BreadController.deleteBread);
 
 // pet
-// router.post("/createPet", PetController.createPet);
+// router.post("/", PetController.createPet);
 
 module.exports = router;
