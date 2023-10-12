@@ -10,7 +10,7 @@ exports.findAllBreads = async (req, res) => {
       status: HttpStatus.OK,
       message: "정상적으로 조회되었습니다.",
       result: result,
-      contentLocation: `/pet/findAllBreads`,
+      contentLocation: "api/v1/pet/bread",
     });
   }
   if (!result) {
@@ -22,7 +22,7 @@ exports.findAllBreads = async (req, res) => {
         {
           rel: "findAllBreads",
           method: "GET",
-          href: `/pet/findAllBreads`,
+          href: `api/v1/pet/bread`,
         },
       ],
     });
@@ -38,7 +38,7 @@ exports.findBreadByBreadNo = async (req, res, next) => {
       status: HttpStatus.OK,
       message: "성공적으로 조회되었습니다.",
       result: result,
-      contentLocation: `pet/findBreadByBreadNo/${breadNo}`,
+      contentLocation: `api/v1/pet/bread/${breadNo}`,
     });
   }
   if (!result) {
@@ -50,7 +50,7 @@ exports.findBreadByBreadNo = async (req, res, next) => {
         {
           rel: "findBreadByBreadNo",
           method: "GET",
-          href: `/movie/${breadNo}`,
+          href: `api/v1/pet/bread/${breadNo}`,
         },
       ],
     });
@@ -63,12 +63,11 @@ exports.createBread = async (req, res, next) => {
     const breadName = req.body.breadName;
     const result = await BreadService.createBread(breadName);
     if (result) {
-      res.status(
-        HttpStatus.CREATED.send({
-          status: HttpStatus.CREATED,
-          message: "정상적으로 등록되었습니다.",
-        })
-      );
+      res.status(HttpStatus.CREATED).send({
+        status: HttpStatus.CREATED,
+        message: "정상적으로 등록되었습니다.",
+        result: [],
+      });
     }
     if (!result) {
       res.status(HttpStatus.BAD_REQUEST).send({
@@ -79,7 +78,7 @@ exports.createBread = async (req, res, next) => {
           {
             rel: "creatBread",
             method: "POST",
-            href: `/pet`,
+            href: `api/v1/pet/bread`,
           },
         ],
       });
@@ -93,7 +92,7 @@ exports.createBread = async (req, res, next) => {
         {
           rel: "creatBread",
           method: "POST",
-          href: `/pet`,
+          href: `api/v1/pet/bread`,
         },
       ],
     });
@@ -121,7 +120,7 @@ exports.updateBread = async (req, res, next) => {
         {
           rel: "updateBread",
           method: "PUT",
-          href: `/bread/${req.params.breadNo}`,
+          href: `api/v1/pet/bread/${req.params.breadNo}`,
         },
       ],
     });
@@ -148,7 +147,7 @@ exports.deleteBread = async (req, res, next) => {
         {
           rel: "deleteBread",
           method: "DELETE",
-          href: `/bread/${req.params.breadNo}`,
+          href: `api/v1/pet/bread/${req.params.breadNo}`,
         },
       ],
     });

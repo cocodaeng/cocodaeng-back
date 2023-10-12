@@ -3,7 +3,7 @@ const getConnection = require("../../database/connection");
 const KakaoAPI = require("../../apis/oauth/kakao-api");
 const KakaoDTO = require("../../dto/kakao-dto");
 const MemberService = require("../../services/member/member-service");
-const secretKey = require("../../config/jwt.js");
+const secretKey = require("../../config/jws");
 
 // 카카오 로그인
 exports.kakaoLogin = (code) => {

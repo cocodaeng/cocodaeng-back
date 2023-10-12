@@ -11,6 +11,6 @@ router.put("/bread/:breadNo", BreadController.updateBread);
 router.delete("/bread/:breadNo", BreadController.deleteBread);
 
 // pet
-// router.post("/", PetController.createPet);
+router.post("/", PetController.createPet);
 
 module.exports = router;
