@@ -15,6 +15,9 @@ app.use((err, req, res, next) => {
 const memberRouter = require("./src/routes/member-route");
 app.use("/api/v1/member", memberRouter);
 
+const petRouter = require("./src/routes/pet-route");
+app.use("/api/v1/pet", petRouter);
+
 const appleRouter = require("./src/routes/apple-route");
 app.use("/api/v1/oauth/apple", appleRouter);
 
