@@ -3,7 +3,7 @@ const HttpStatus = require("http-status");
 const KakaoDTO = require("../../dto/kakao-dto");
 
 // 카카오 로그인
-exports.kakaoCallBack = async (req, res) => {
+exports.kakaoCallBack = (req, res) => {
   console.log(req);
   const result = KakaoService.kakaoLogin(req.body.code);
   console.log(result);

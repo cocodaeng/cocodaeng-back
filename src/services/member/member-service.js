@@ -20,8 +20,8 @@ exports.findMemberByNo = (memberNo) => {
         result.policyConsent,
         result.createDate,
         result.updateDate,
-        leaveDate,
-        leaveStatus
+        result.leaveDate,
+        result.leaveStatus
       );
       resolve(member);
       connection.commit();
