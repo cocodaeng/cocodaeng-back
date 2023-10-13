@@ -20,8 +20,8 @@ exports.createBread = () => {
   return `
         INSERT 
           INTO TBL_BREAD
-               (bread_name)
-        VALUSE (?)
+            (bread_name)
+       VALUES (?)
     `;
 };
 
@@ -29,11 +29,12 @@ exports.createBread = () => {
 exports.updateBread = () => {
   return `
         UPDATE TBL_BREAD
-           SET bread_name = ?,
+           SET bread_name = ?
          WHERE bread_no =?
     `;
 };
 
+// 견종 삭제
 exports.deleteBread = () => {
   return `
         DELETE FROM TBL_BREAD

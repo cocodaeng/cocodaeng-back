@@ -26,6 +26,7 @@ exports.findBreadByBreadNo = (connection, breadNo) => {
         if (result.length === 0) {
           resolve(null);
         }
+        console.log(result);
         resolve(result);
       }
     );
@@ -33,6 +34,7 @@ exports.findBreadByBreadNo = (connection, breadNo) => {
 };
 
 exports.createBread = (connection, breadName) => {
+  console.log(breadName);
   return new Promise((resolve, reject) => {
     connection.query(BreadQuery.createBread(), [breadName], (err, result) => {
       if (err) {
@@ -47,10 +49,13 @@ exports.updateBread = (connection, breadDTO) => {
   return new Promise((resolve, reject) => {
     connection.query(
       BreadQuery.updateBread(),
-      [breadDTO.breadNo, breadDTO.breadName],
+      [breadDTO.breadName, breadDTO.breadNo],
       (err, result) => {
         if (err) {
           reject(err);
+        }
+        if (!result.affectedRows) {
+          resolve(null);
         }
         resolve(result);
       }

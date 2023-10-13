@@ -1,5 +1,6 @@
 const HttpStatus = require("http-status");
-const PetDTO = require("../../dto/pet/request/pet-dto");
+const PetRequestDTO = require("../../dto/pet/request/pet-request-dto");
+const PetDTO = require("../../dto/pet-dto");
 const PetService = require("../../services/pet/pet-service");
 
 // 회원 번호로 펫 조회
@@ -42,11 +43,12 @@ exports.findPet = async (req, res) => {
 
 // 펫 등록
 exports.createPet = async (req, res, next) => {
+  const petProfilePicture = req.file.location;
   const petDTO = new PetDTO(
     req.body.memberNo,
     req.body.breadNo,
     req.body.petName,
-    req.body.petProfilePicture,
+    petProfilePicture,
     req.body.petAge,
     req.body.petWeight,
     req.body.createDate,
