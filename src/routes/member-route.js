@@ -4,7 +4,7 @@ const { auth } = require("../middleware/auth-middleware");
 const MemberController = require("../controllers/member/member-controller");
 const PolicyController = require("../controllers/member/policy-controller");
 
-// Member
+// 회원 조회
 router.get("/findMember", auth, MemberController.findMember);
 
 // Policy

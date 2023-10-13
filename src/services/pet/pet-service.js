@@ -8,7 +8,7 @@ exports.findPet = (memberNo) => {
     const connection = getConnection();
 
     const result = await PetRepository.findPetByNo(connection, memberNo);
-    console.log(result);
+
     if (result !== null) {
       // 조회 성공 시
       const pet = new PetDTO({

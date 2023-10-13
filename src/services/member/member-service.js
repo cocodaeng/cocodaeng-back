@@ -11,18 +11,18 @@ exports.findMemberByNo = (memberNo) => {
 
     if (result !== null) {
       // 조회 성공 시
-      const member = new MemberDTO(
-        result.memberNo,
-        result.memberName,
-        result.kakaoId,
-        result.appleId,
-        result.photoAgreeStatus,
-        result.policyConsent,
-        result.createDate,
-        result.updateDate,
-        result.leaveDate,
-        result.leaveStatus
-      );
+      const member = new MemberDTO({
+        memberNo: result[0].member_no,
+        memberName: result[0].member_name,
+        kakaoId: result[0].kakao_id,
+        appleId: result[0].apple_id,
+        photoAgreeStatus: result[0].photo_agree_status,
+        policyConsent: result[0].policy_consent,
+        createDate: result[0].create_date,
+        updateDate: result[0].update_date,
+        leaveDate: result[0].leave_date,
+        leaveStatus: result[0].leave_status,
+      });
       resolve(member);
       connection.commit();
     }
