@@ -32,7 +32,7 @@ exports.findPetProgramByNo = (petNo) => {
     }
     if (result === null) {
       // 조회 실패 시
-      reject(new Error("회원 진행 프로그램 조회 실패"));
+      reject(new Error("특정 펫 진행 프로그램 전체 조회 실패"));
       connection.rollback();
     }
     connection.end();
