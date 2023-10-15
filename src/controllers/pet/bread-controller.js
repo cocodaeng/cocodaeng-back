@@ -5,15 +5,12 @@ const BreadService = require("../../services/pet/bread-service");
 // 견종 전체 조회
 exports.findAllBreads = async (req, res, next) => {
   const result = await BreadService.findAllBreads();
-  console.log(result[0]);
+  console.log(result);
   if (result) {
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
       message: "정상적으로 조회되었습니다.",
-      result: {
-        breadNo: result[0].bread_no,
-        breadName: result[0].bread_name,
-      },
+      result: result,
       contentLocation: "api/v1/pet/bread",
     });
   }
