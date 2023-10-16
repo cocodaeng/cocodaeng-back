@@ -6,6 +6,9 @@ const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
 
+const mainRouter = require("./src/routes/main-route");
+app.use("/api/v1/main", mainRouter);
+
 const memberRouter = require("./src/routes/member-route");
 app.use("/api/v1/member", memberRouter);
 
