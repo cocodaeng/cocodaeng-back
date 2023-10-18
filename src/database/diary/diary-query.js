@@ -5,6 +5,7 @@ exports.findDiaryByNo = () => {
   return `
             SELECT * 
             FROM TBL_DIARY
-            WHERE pet_no = ?;
+            WHERE pet_no = ?
+            AND diary_status = 1;
         `;
 };

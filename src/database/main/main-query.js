@@ -8,6 +8,7 @@ exports.findMainPage = () => {
     LEFT JOIN TBL_DIARY B
     ON A.PET_NO = B.PET_NO
     WHERE A.PET_NO = ?
+    AND B.DIARY_STATUS = 1
     AND A.PET_PROGRAM_NO = B.PET_PROGRAM_NO 
     AND CREATE_DATE LIKE ?;
     `;

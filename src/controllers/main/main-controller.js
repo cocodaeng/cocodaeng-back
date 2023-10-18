@@ -22,7 +22,7 @@ exports.findMainPage = async (req, res) => {
         diary_no: result[i].diary_no,
         diary_content: result[i].diary_content,
         fodder_name: result[i].fodder_name,
-        pet_status: result[i].pet_status,
+        pet_health: result[i].pet_health,
         diary_photo_left_eye: result[i].diary_photo_left_eye,
         diary_photo_right_eye: result[i].diary_photo_right_eye,
         diary_photo_left_ear: result[i].diary_photo_left_ear,
@@ -32,7 +32,7 @@ exports.findMainPage = async (req, res) => {
         create_date: result[i].create_date,
         update_date: result[i].update_date,
         delete_date: result[i].delete_date,
-        delete_status: result[i].delete_status,
+        diary_status: result[i].diary_status,
       };
     }
 

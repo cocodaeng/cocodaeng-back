@@ -5,7 +5,8 @@ exports.findPetByNo = () => {
   return `
                   SELECT * 
                   FROM TBL_PETS
-                  WHERE member_no = ?;
+                  WHERE member_no = ?
+                  AND pet_status = 1;
               `;
 };
 

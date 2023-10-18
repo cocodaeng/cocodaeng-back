@@ -5,7 +5,8 @@ exports.findMemberByNo = () => {
   return `
                 SELECT * 
                 FROM TBL_MEMBER
-                WHERE member_no = ?;
+                WHERE member_no = ?
+                AND member_status = 'T';
             `;
 };
 
@@ -14,7 +15,8 @@ exports.findMemberByKakaoId = () => {
   return `
               SELECT * 
               FROM TBL_MEMBER
-              WHERE kakao_id = ?;
+              WHERE kakao_id = ?
+              AND member_status = 'T';
           `;
 };
 
