@@ -25,14 +25,14 @@ exports.findPetJoinProgram = async (req, res) => {
 
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
-      message: "홈 화면 조회 성공",
+      message: "펫이 참여하는 프로그램들 조회 성공",
       pet_program_data: pet_program_data,
     });
   }
   if (result === null) {
     res.status(HttpStatus.NOT_FOUND).send({
       status: HttpStatus.NOT_FOUND, // 404
-      message: "홈 화면 조회 실패",
+      message: "펫이 참여하는 프로그램들 조회 실패",
       code: -999999,
       links: [
         {
