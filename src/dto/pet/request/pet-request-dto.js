@@ -23,7 +23,7 @@ class PetDTO {
     this.petProfilePicture = petProfilePicture;
     this.petAge = petAge;
     this.petWeight = petWeight;
-    this.createDate = new Date().getDate();
+    this.createDate = new Date();
     this.petStatus = petStatus;
   }
 }
