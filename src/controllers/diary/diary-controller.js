@@ -52,10 +52,11 @@ exports.findDiaries = async (req, res) => {
   }
 };
 
-// 다이어리 조회 - 김종완
+/* 다이어리 번호로 다이어리 조회 - 김종완 */
 exports.findDiaryByDiaryNo = async (req, res, next) => {
   const diaryNo = req.params.diaryNo;
   const result = await DiaryService.findDiaryByDiaryNo(diaryNo);
+  // 정상 조회 시
   if (result) {
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
@@ -66,7 +67,6 @@ exports.findDiaryByDiaryNo = async (req, res, next) => {
         petProgramNo: result[0].pet_program_no,
         diaryContent: result[0].diary_content,
         fodderName: result[0].fodder_name,
-        createDate: result[0].create_date,
         petStatus: result[0].pet_status,
         diaryPhotoLeftEye: result[0].diary_photo_left_eye,
         diaryPhotoRightEye: result[0].diary_photo_right_eye,
@@ -74,9 +74,11 @@ exports.findDiaryByDiaryNo = async (req, res, next) => {
         diaryPhotoRightEar: result[0].diary_photo_right_ear,
         diaryPhotoAnal: result[0].diary_photo_anal,
         diaryPhotoEtc: result[0].diary_photo_etc,
+        createDate: result[0].create_date,
       },
     });
   }
+  // 조회 실패 시
   if (!result) {
     res.status(HttpStatus.BAD_REQUEST).send({
       status: HttpStatus.BAD_REQUEST,
@@ -93,11 +95,11 @@ exports.findDiaryByDiaryNo = async (req, res, next) => {
   }
 };
 
-// 다이어리 등록
+/* 다이어리 신규 등록 - 김종완 */
 exports.createDiary = async (req, res, next) => {
-  console.log("request Body : ", req.body);
-  console.log("키 값 : ", req.body.diaryNo);
-  console.log("request files : ", req.files[0].path);
+  // console.log("request Body : ", req.body);
+  // console.log("키 값 : ", req.body.diaryNo);
+  // console.log("request files : ", req.files[0].path);
   const createDTO = DiaryDTO.fromCreateDiary(
     req.body.diaryNo,
     req.body.petNo,
@@ -114,13 +116,17 @@ exports.createDiary = async (req, res, next) => {
   );
   try {
     const result = await DiaryService.createDiary(createDTO);
+    // 등록 성공 시
     if (result) {
       res.status(HttpStatus.CREATED).send({
         status: HttpStatus.CREATED,
         message: "정상적으로 등록되었습니다.",
-        result: result[0],
+        result: {
+          diaryNo: result.insertId,
+        },
       });
     }
+    // DB 반영이 안 되었을 때(요청 변수가 잘못되었을 때)
     if (result.affectedRows === 0) {
       res.status(HttpStatus.BAD_REQUEST).send({
         status: HttpStatus.BAD_REQUEST,
@@ -136,6 +142,7 @@ exports.createDiary = async (req, res, next) => {
       });
     }
   } catch (err) {
+    // 에러 발생 시
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
       status: HttpStatus.INTERNAL_SERVER_ERROR,
       message: err.message,
@@ -151,11 +158,12 @@ exports.createDiary = async (req, res, next) => {
   }
 };
 
-// 다이어리 수정 - 김종완
+/* 다이어리 수정 - 김종완 */
 exports.updateDiary = async (req, res, next) => {
+  console.log(req);
   const updateDTO = DiaryDTO.fromUpdateDiary(
-    req.body.diary_no,
-    req.body.pet_no,
+    req.params.diaryNo,
+    req.body.petNo,
     req.body.petProgramNo,
     req.body.diaryContent,
     req.body.fodderName,
@@ -166,11 +174,12 @@ exports.updateDiary = async (req, res, next) => {
     req.files[3].path,
     req.files[4].path,
     req.files[5].path,
-    createDate,
-    deleteStatus
+    req.body.createDate,
+    req.body.deleteStatus
   );
   try {
     const result = await DiaryService.updateDiary(updateDTO);
+    // 수정 성공 시
     if (result) {
       res.status(HttpStatus.OK).send({
         status: HttpStatus.OK,
@@ -178,6 +187,7 @@ exports.updateDiary = async (req, res, next) => {
         result: [],
       });
     }
+    // 수정 실패 시
     if (result.affectedRows === 0) {
       res.status(HttpStatus.BAD_REQUEST).send({
         status: HttpStatus.BAD_REQUEST,
@@ -193,6 +203,7 @@ exports.updateDiary = async (req, res, next) => {
       });
     }
   } catch (err) {
+    // 과정 중 에러 발생 시
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
       status: HttpStatus.INTERNAL_SERVER_ERROR,
       message: err.message,
@@ -207,12 +218,13 @@ exports.updateDiary = async (req, res, next) => {
   }
 };
 
-// 다이어리 삭제 - 김종완
+/* 다이어리 삭제(상태 값 변경) - 김종완 */
 exports.deleteDiary = async (req, res, next) => {
   const diaryNo = req.params.diaryNo;
   try {
     const result = await DiaryService.deleteDiary(diaryNo);
     console.log("diary controller deleteDiary result : ", result);
+    // 삭제 상태 변경 성공 시
     if (result) {
       res.status(HttpStatus.OK).send({
         status: HttpStatus.OK,
@@ -220,6 +232,7 @@ exports.deleteDiary = async (req, res, next) => {
         result: [],
       });
     }
+    // 삭제 상태 변경 실패 시
     if (result.affectedRows === 0) {
       res.status(HttpStatus.BAD_REQUEST).send({
         status: HttpStatus.BAD_REQUEST,
@@ -235,6 +248,7 @@ exports.deleteDiary = async (req, res, next) => {
       });
     }
   } catch (err) {
+    // 과정 중 에러 발생 시
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
       status: HttpStatus.INTERNAL_SERVER_ERROR,
       message: err.message,
