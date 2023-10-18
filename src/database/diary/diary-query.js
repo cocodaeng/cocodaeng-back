@@ -9,7 +9,7 @@ exports.findDiariesByPetNo = () => {
         `;
 };
 
-// 다이어리 단일 조회 - 김종완
+/* 다이어리 번호로 다이어리 조회 - 김종완 */
 exports.findDiaryByDiaryNo = () => {
   return `
       SELECT diary_no
@@ -30,7 +30,7 @@ exports.findDiaryByDiaryNo = () => {
   `;
 };
 
-// 다이어리 생성 - 김종완
+/* 다이어리 신규 등록 - 김종완 */
 exports.createDiary = () => {
   return `
       INSERT INTO TBL_DIARY
@@ -52,11 +52,13 @@ exports.createDiary = () => {
   `;
 };
 
-// 다이어리 수정 - 김종완
+/* 다이어리 수정 - 김종완 */
 exports.updateDiary = () => {
   return `
       UPDATE TBL_DIARY
         SET
+          pet_no = ?,
+          pet_program_no = ?,
           diary_content = ?,
           fodder_name = ?,
           pet_status = ?,
@@ -67,14 +69,16 @@ exports.updateDiary = () => {
           diary_photo_anal = ?,
           diary_photo_etc = ?,
           update_date = ?
-        WHERE pet_no = ? AND pet_program_no = ?
+        WHERE diary_no = ?
   `;
 };
 
-// 다이어리 삭제 - 김종완
+/* 다이어리 삭제(상태 값 변경) - 김종완 */
 exports.deleteDiary = () => {
   return `
-    DELETE FROM TBL_DIARY
-     WHERE delete_no = ?
+      UPDATE TBL_DIARY
+         SET
+          delete_status = ?
+       WHERE diary_no = ?
   `;
 };

@@ -8,10 +8,12 @@ exports.findDiariesByPetNo = (connection, petNo) => {
       DiaryQuery.findDiariesByPetNo(),
       [petNo],
       (err, result) => {
+        // 에러 발생 시
         if (err) {
           console.log("error: " + err);
           reject(err);
         }
+        // 정상 조회 시
         console.log("result" + result);
         resolve(result);
       }
@@ -19,26 +21,29 @@ exports.findDiariesByPetNo = (connection, petNo) => {
   });
 };
 
-// 다이어리 단일 조회
+/* 다이어리 번호로 다이어리 조회 - 김종완 */
 exports.findDiaryByDiaryNo = (connection, diaryNo) => {
   return new Promise((resolve, reject) => {
     connection.query(
       DiaryQuery.findDiaryByDiaryNo(),
       [diaryNo],
       (err, result) => {
+        // 에러 발생 시
         if (err) {
           reject(err);
         }
+        // 빈 결과일 시
         if (result.length === 0) {
           resolve(null);
         }
+        // 정상 조회일 시
         resolve(result);
       }
     );
   });
 };
 
-// 다이어리 생성 - 김종완
+/* 다이어리 신규 등록 - 김종완 */
 exports.createDiary = (connection, diaryDTO) => {
   return new Promise((resolve, reject) => {
     connection.query(
@@ -58,16 +63,18 @@ exports.createDiary = (connection, diaryDTO) => {
         diaryDTO.createDate,
       ],
       (err, result) => {
+        // 에러 발생 시
         if (err) {
           reject(err);
         }
+        // 등록 성공 시
         resolve(result);
       }
     );
   });
 };
 
-// 다이어리 수정 - 김종완
+/* 다이어리 수정 - 김종완 */
 exports.updateDiary = (connection, diaryDTO) => {
   return new Promise((resolve, reject) => {
     connection.query(
@@ -85,24 +92,29 @@ exports.updateDiary = (connection, diaryDTO) => {
         diaryDTO.diaryPhotoAnal,
         diaryDTO.diaryPhotoEtc,
         diaryDTO.updateDate,
+        diaryDTO.diaryNo,
       ],
       (err, result) => {
+        // 에러 발생 시
         if (err) {
           reject(err);
         }
+        // 수정 성공 시
         resolve(result);
       }
     );
   });
 };
 
-// 다이어리 삭제 - 김종완
+/* 다이어리 삭제(상태 값 변경) - 김종완 */
 exports.deleteDiary = (connection, diaryNo) => {
   return new Promise((resolve, reject) => {
-    connection.query(DiaryQuery.deleteDiary(), [diaryNo, 1], (err, result) => {
+    connection.query(DiaryQuery.deleteDiary(), [0, diaryNo], (err, result) => {
+      // 에러 발생 시
       if (err) {
         reject(err);
       }
+      // 삭제 성공 시
       resolve(result);
     });
   });

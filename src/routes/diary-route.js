@@ -7,7 +7,7 @@ const upload = multer({ dest: "./uploads" });
 router.get("/findDiaries", DiaryController.findDiaries);
 router.get("/:diaryNo", DiaryController.findDiaryByDiaryNo);
 router.post("/", upload.any(), DiaryController.createDiary);
-router.put("/:diaryNo", DiaryController.updateDiary);
+router.put("/:diaryNo", upload.any(), DiaryController.updateDiary);
 router.delete("/:diaryNo", DiaryController.deleteDiary);
 
 module.exports = router;
