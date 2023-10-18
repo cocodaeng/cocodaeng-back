@@ -1,6 +1,8 @@
+/* 토큰 검증 미들웨어 */
 const jwt = require("jsonwebtoken");
 const SECRET_KEY = process.env.SECRET_KEY;
 
+/* 토큰 검증하는 미들웨어 메소드 - 조만제 */
 exports.auth = (req, res, next) => {
   // 인증 완료
   try {

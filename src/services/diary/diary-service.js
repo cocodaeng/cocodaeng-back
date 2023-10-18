@@ -1,8 +1,9 @@
+/* 다이어리 서비스 */
 const getConnection = require("../../database/connection");
 const DiaryRepository = require("../../repositories/diary/diary-repository");
 const DiaryDTO = require("../../dto/diary-dto");
 
-// 다이어리 전체 조회
+/* 다이어리 전체 조회 메소드 - 조만제 */
 exports.findDiaryByNo = (petNo) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();

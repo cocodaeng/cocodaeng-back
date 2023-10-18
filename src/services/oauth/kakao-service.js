@@ -1,3 +1,4 @@
+/* 카카오 서비스 */
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -6,7 +7,7 @@ const KakaoAPI = require("../../apis/oauth/kakao-api");
 const KakaoDTO = require("../../dto/kakao-dto");
 const MemberService = require("../../services/member/member-service");
 
-// 카카오 로그인
+/* 카카오 로그인 메소드 - 조만제 */
 exports.kakaoLogin = (code) => {
   const secretKey = process.env.SECRET_KEY;
   const expiresIn = process.env.JWT_EXP;
@@ -30,5 +31,5 @@ exports.kakaoLogin = (code) => {
   return null;
 };
 
-// 카카오 로그아웃
+/* 카카오 로그아웃 메소드 - 조만제 */
 exports.kakaoLogout = () => {};

@@ -1,4 +1,6 @@
-// 회원 번호로 펫 조회
+/* 펫 쿼리 */
+
+/* 회원 번호로 펫 조회하는 메소드 - 조만제 */
 exports.findPetByNo = () => {
   return `
                   SELECT * 

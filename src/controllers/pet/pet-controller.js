@@ -1,9 +1,10 @@
+/* 펫 컨트롤러 */
 const HttpStatus = require("http-status");
 const PetRequestDTO = require("../../dto/pet/request/pet-request-dto");
 const PetDTO = require("../../dto/pet-dto");
 const PetService = require("../../services/pet/pet-service");
 
-// 회원 번호로 펫 조회
+/* 회원 번호로 펫 조회하는 메소드 - 조만제 */
 exports.findPet = async (req, res) => {
   const result = await PetService.findPet(1);
   console.log(result);

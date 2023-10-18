@@ -1,6 +1,7 @@
+/* 펫 레포지토리 */
 const PetQuery = require("../../database/pet/pet-query");
 
-// 회원 번호로 펫 조회
+/* 회원 번호로 펫 조회하는 메소드 - 조만제 */
 exports.findPetByNo = (connection, memberNo) => {
   return new Promise((resolve, reject) => {
     connection.query(PetQuery.findPetByNo(), [memberNo], (err, result) => {

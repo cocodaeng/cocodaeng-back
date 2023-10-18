@@ -1,3 +1,4 @@
+/* DB 커넥션 */
 const mysql = require("mysql");
 const connectionInfo = require("../config/db-config");
 
