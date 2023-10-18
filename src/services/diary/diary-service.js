@@ -4,10 +4,10 @@ const DiaryRepository = require("../../repositories/diary/diary-repository");
 const DiaryDTO = require("../../dto/diary-dto");
 
 /* 다이어리 전체 조회 메소드 - 조만제 */
-exports.findDiaryByNo = (petNo) => {
+exports.findDiariesByPetNo = (petNo) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();
-    const result = await DiaryRepository.findDiaryByNo(connection, petNo);
+    const result = await DiaryRepository.findDiariesByPetNo(connection, petNo);
     let diaries = [];
 
     if (result !== null) {
@@ -41,5 +41,77 @@ exports.findDiaryByNo = (petNo) => {
       connection.rollback();
     }
     connection.end();
+  });
+};
+
+// 다이어리 단일 조회 - 김종완
+exports.findDiaryByDiaryNo = (diaryNo) => {
+  return new Promise(async (resolve, reject) => {
+    const connection = getConnection();
+    try {
+      const result = await DiaryRepository.findDiaryByDiaryNo(
+        connection,
+        diaryNo
+      );
+      resolve(result);
+    } catch (err) {
+      reject(err);
+    } finally {
+      connection.end();
+    }
+  });
+};
+
+// 다이어리 생성 - 김종완
+exports.createDiary = (diaryDTO) => {
+  return new Promise(async (resolve, reject) => {
+    const connection = getConnection();
+    connection.beginTransaction();
+    try {
+      const result = await DiaryRepository.createDiary(connection, diaryDTO);
+      connection.commit();
+      resolve(result);
+    } catch (err) {
+      connection.rollback();
+      reject(err);
+    } finally {
+      connection.end();
+    }
+  });
+};
+
+// 다이어리 수정 - 김종완
+exports.updateDiary = (diaryDTO) => {
+  return new Promise(async (resolve, reject) => {
+    const connection = getConnection();
+    connection.beginTransaction();
+    try {
+      const result = await DiaryRepository.updateDiary(connection, diaryDTO);
+      connection.commit();
+      resolve(result);
+    } catch (err) {
+      connection.rollback();
+      reject(err);
+    } finally {
+      connection.end();
+    }
+  });
+};
+
+// 다이어리 삭제 - 김종완
+exports.deleteDiary = (diaryNo) => {
+  return new Promise(async (resolve, reject) => {
+    const connection = getConnection();
+    connection.beginTransaction();
+    try {
+      const result = await DiaryRepository.deleteDiary(connection, diaryNo);
+      connection.commit();
+      resolve(result);
+    } catch (err) {
+      connection.rollback();
+      reject(err);
+    } finally {
+      connection.end();
+    }
   });
 };

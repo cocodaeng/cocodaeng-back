@@ -1,10 +1,11 @@
 /* 다이어리 컨트롤러 */
 const DiaryService = require("../../services/diary/diary-service");
 const HttpStatus = require("http-status");
+const DiaryDTO = require("../../dto/diary/diary-dto");
 
 /* 다이어리 전체 조회 메소드 - 조만제 */
 exports.findDiaries = async (req, res) => {
-  const result = await DiaryService.findDiaryByNo(1);
+  const result = await DiaryService.findDiariesByPetNo(1);
   let diaries = [];
 
   if (result !== null) {
@@ -45,6 +46,204 @@ exports.findDiaries = async (req, res) => {
           // rel: "",
           // method: "POST",
           // href: "",
+        },
+      ],
+    });
+  }
+};
+
+// 다이어리 조회 - 김종완
+exports.findDiaryByDiaryNo = async (req, res, next) => {
+  const diaryNo = req.params.diaryNo;
+  const result = await DiaryService.findDiaryByDiaryNo(diaryNo);
+  if (result) {
+    res.status(HttpStatus.OK).send({
+      status: HttpStatus.OK,
+      message: "성공적으로 조회되었습니다.",
+      result: {
+        diaryNo: result[0].diary_no,
+        petNo: result[0].pet_no,
+        petProgramNo: result[0].pet_program_no,
+        diaryContent: result[0].diary_content,
+        fodderName: result[0].fodder_name,
+        createDate: result[0].create_date,
+        petStatus: result[0].pet_status,
+        diaryPhotoLeftEye: result[0].diary_photo_left_eye,
+        diaryPhotoRightEye: result[0].diary_photo_right_eye,
+        diaryPhotoLeftEar: result[0].diary_photo_left_ear,
+        diaryPhotoRightEar: result[0].diary_photo_right_ear,
+        diaryPhotoAnal: result[0].diary_photo_anal,
+        diaryPhotoEtc: result[0].diary_photo_etc,
+      },
+    });
+  }
+  if (!result) {
+    res.status(HttpStatus.BAD_REQUEST).send({
+      status: HttpStatus.BAD_REQUEST,
+      message: "조회에 실패하였습니다.",
+      result: [],
+      links: [
+        {
+          rel: "findDiaryByDiaryNo",
+          method: "GET",
+          href: `api/v1/diary/${diaryNo}`,
+        },
+      ],
+    });
+  }
+};
+
+// 다이어리 등록
+exports.createDiary = async (req, res, next) => {
+  console.log("request Body : ", req.body);
+  console.log("키 값 : ", req.body.diaryNo);
+  console.log("request files : ", req.files[0].path);
+  const createDTO = DiaryDTO.fromCreateDiary(
+    req.body.diaryNo,
+    req.body.petNo,
+    req.body.petProgramNo,
+    req.body.diaryContent,
+    req.body.fodderName,
+    req.body.petStatus,
+    req.files[0].path,
+    req.files[1].path,
+    req.files[2].path,
+    req.files[3].path,
+    req.files[4].path,
+    req.files[5].path
+  );
+  try {
+    const result = await DiaryService.createDiary(createDTO);
+    if (result) {
+      res.status(HttpStatus.CREATED).send({
+        status: HttpStatus.CREATED,
+        message: "정상적으로 등록되었습니다.",
+        result: result[0],
+      });
+    }
+    if (result.affectedRows === 0) {
+      res.status(HttpStatus.BAD_REQUEST).send({
+        status: HttpStatus.BAD_REQUEST,
+        message: "등록에 실패하였습니다.",
+        result: [],
+        links: [
+          {
+            rel: "createDiary",
+            method: "POST",
+            href: `api/v1/diary`,
+          },
+        ],
+      });
+    }
+  } catch (err) {
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+      status: HttpStatus.INTERNAL_SERVER_ERROR,
+      message: err.message,
+      result: [],
+      links: [
+        {
+          rel: "createDiary",
+          method: "POST",
+          href: "api/v1/diary",
+        },
+      ],
+    });
+  }
+};
+
+// 다이어리 수정 - 김종완
+exports.updateDiary = async (req, res, next) => {
+  const updateDTO = DiaryDTO.fromUpdateDiary(
+    req.body.diary_no,
+    req.body.pet_no,
+    req.body.petProgramNo,
+    req.body.diaryContent,
+    req.body.fodderName,
+    req.body.petStatus,
+    req.files[0].path,
+    req.files[1].path,
+    req.files[2].path,
+    req.files[3].path,
+    req.files[4].path,
+    req.files[5].path,
+    createDate,
+    deleteStatus
+  );
+  try {
+    const result = await DiaryService.updateDiary(updateDTO);
+    if (result) {
+      res.status(HttpStatus.OK).send({
+        status: HttpStatus.OK,
+        message: "정상적으로 수정되었습니다.",
+        result: [],
+      });
+    }
+    if (result.affectedRows === 0) {
+      res.status(HttpStatus.BAD_REQUEST).send({
+        status: HttpStatus.BAD_REQUEST,
+        message: "잘못된 요청입니다.",
+        result: [],
+        links: [
+          {
+            rel: "updateDiary",
+            method: "PUT",
+            href: `api/v1/diary/${req.params.diaryNo}`,
+          },
+        ],
+      });
+    }
+  } catch (err) {
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+      status: HttpStatus.INTERNAL_SERVER_ERROR,
+      message: err.message,
+      links: [
+        {
+          rel: "updateDiary",
+          method: "PUT",
+          href: `api/v1/diary/${req.params.diaryNo}`,
+        },
+      ],
+    });
+  }
+};
+
+// 다이어리 삭제 - 김종완
+exports.deleteDiary = async (req, res, next) => {
+  const diaryNo = req.params.diaryNo;
+  try {
+    const result = await DiaryService.deleteDiary(diaryNo);
+    console.log("diary controller deleteDiary result : ", result);
+    if (result) {
+      res.status(HttpStatus.OK).send({
+        status: HttpStatus.OK,
+        message: "정상적으로 삭제되었습니다",
+        result: [],
+      });
+    }
+    if (result.affectedRows === 0) {
+      res.status(HttpStatus.BAD_REQUEST).send({
+        status: HttpStatus.BAD_REQUEST,
+        message: "잘못된 요청입니다.",
+        result: [],
+        links: [
+          {
+            rel: "deleteDiary",
+            method: "DELETE",
+            href: `api/v1/diary/${diaryNo}`,
+          },
+        ],
+      });
+    }
+  } catch (err) {
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+      status: HttpStatus.INTERNAL_SERVER_ERROR,
+      message: err.message,
+      result: [],
+      links: [
+        {
+          rel: "deleteDiary",
+          method: "DELETE",
+          href: `api/v1/diary/${diaryNo}`,
         },
       ],
     });

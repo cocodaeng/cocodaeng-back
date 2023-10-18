@@ -92,9 +92,9 @@ exports.createBread = async (req, res, next) => {
     }
   } catch (err) {
     console.error(err);
-    res.status(HttpStatus.BAD_REQUEST).send({
-      status: HttpStatus.BAD_REQUEST,
-      message: "잘못된 요청입니다.",
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+      status: HttpStatus.INTERNAL_SERVER_ERROR,
+      message: err.message,
       result: [],
       links: [
         {
@@ -119,7 +119,7 @@ exports.updateBread = async (req, res, next) => {
         message: "정상적으로 수정되었습니다.",
       });
     }
-    if (!result) {
+    if (result.affectedRows === 0) {
       res.status(HttpStatus.BAD_REQUEST).send({
         status: HttpStatus.BAD_REQUEST,
         message: "잘못된 요청입니다.",
@@ -137,7 +137,7 @@ exports.updateBread = async (req, res, next) => {
     console.log(err.message);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
       status: HttpStatus.INTERNAL_SERVER_ERROR,
-      message: "수정에 실패하였습니다.",
+      message: err.message,
       links: [
         {
           rel: "updateBread",

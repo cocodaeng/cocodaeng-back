@@ -1,10 +1,80 @@
 /* 다이어리 쿼리 */
 
 /* 다이어리 전체 조회 메소드 - 조만제 */
-exports.findDiaryByNo = () => {
+exports.findDiariesByPetNo = () => {
   return `
             SELECT * 
             FROM TBL_DIARY
             WHERE pet_no = ?;
         `;
+};
+
+// 다이어리 단일 조회 - 김종완
+exports.findDiaryByDiaryNo = () => {
+  return `
+      SELECT diary_no
+           , pet_no
+           , pet_program_no
+           , diary_content
+           , fodder_name
+           , pet_status
+           , diary_photo_left_eye
+           , diary_photo_right_eye
+           , diary_photo_left_ear
+           , diary_photo_right_ear
+           , diary_photo_anal
+           , diary_photo_etc
+           , create_date
+        FROM TBL_DIARY
+       WHERE diary_no = ?
+  `;
+};
+
+// 다이어리 생성 - 김종완
+exports.createDiary = () => {
+  return `
+      INSERT INTO TBL_DIARY
+      (
+        pet_no,
+        pet_program_no,
+        diary_content,
+        fodder_name,
+        pet_status,
+        diary_photo_left_eye,
+        diary_photo_right_eye,
+        diary_photo_left_ear,
+        diary_photo_right_ear,
+        diary_photo_anal,
+        diary_photo_etc,
+        create_date
+      )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+};
+
+// 다이어리 수정 - 김종완
+exports.updateDiary = () => {
+  return `
+      UPDATE TBL_DIARY
+        SET
+          diary_content = ?,
+          fodder_name = ?,
+          pet_status = ?,
+          diary_photo_left_eye = ?,
+          diary_photo_right_eye = ?,
+          diary_photo_left_ear = ?,
+          diary_photo_right_ear = ?,
+          diary_photo_anal = ?,
+          diary_photo_etc = ?,
+          update_date = ?
+        WHERE pet_no = ? AND pet_program_no = ?
+  `;
+};
+
+// 다이어리 삭제 - 김종완
+exports.deleteDiary = () => {
+  return `
+    DELETE FROM TBL_DIARY
+     WHERE delete_no = ?
+  `;
 };

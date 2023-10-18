@@ -17,7 +17,7 @@ const allowedExtensions = [".png", ".jpg", ".jpeg", ".bmp"];
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-const ImageUploader = upload.array("images", 10); // array("필드 이름", '최대 개수')
+const ImageUploader = upload.array("images", 6); // array("필드 이름", '최대 개수')
 
 ImageUploader.singleOrArray = (field, maxCount) => {
   const middleware = upload.fields([{ name: field, maxCount }]);
