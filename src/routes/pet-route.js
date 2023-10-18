@@ -1,3 +1,4 @@
+/* 펫 관련 경로 */
 const express = require("express");
 const router = express.Router();
 const { auth } = require("../middleware/auth-middleware");
@@ -14,14 +15,15 @@ router.post("/bread", auth, BreadController.createBread);
 router.put("/bread/:breadNo", auth, BreadController.updateBread);
 router.delete("/bread/:breadNo", auth, BreadController.deleteBread);
 
-// pet
+/* 펫 조회 라우터 - 조만제 */
 router.get("/findPet", auth, PetController.findPet);
+
 router.post("/", auth, ImageUploader, PetController.createPet);
 
-// 특정 펫 진행 프로그램 전체 조회
+/* 특정 펫 진행 프로그램 전체 조회 라우터 - 조만제 */
 router.get("/findPetPrograms", PetProgramController.findPetPrograms);
 
-// 다이어리 전체 조회
+/* 다이어리 전체 조회 라우터 - 조만제 */
 router.get("/findDiaries", DiaryController.findDiaries);
 
 module.exports = router;

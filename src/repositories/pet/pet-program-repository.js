@@ -1,6 +1,7 @@
+/* 펫 진행 프로그램 레포지토리 */
 const PetProgramQuery = require("../../database/pet/pet-program-query");
 
-// 특정 펫 진행 프로그램 전체 조회
+/* 특정 펫 진행 프로그램 전체 조회 - 조만제 */
 exports.findPetProgramByNo = (connection, petNo) => {
   return new Promise((resolve, reject) => {
     connection.query(

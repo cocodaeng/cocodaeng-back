@@ -1,8 +1,9 @@
+/* 펫 서비스 */
 const getConnection = require("../../database/connection");
 const PetRepository = require("../../repositories/pet/pet-repository");
 const PetDTO = require("../../dto/pet-dto");
 
-// 회원 번호로 펫 조회
+/* 회원 번호로 펫 조회하는 메소드 - 조만제 */
 exports.findPet = (memberNo) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();

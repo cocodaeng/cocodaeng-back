@@ -1,7 +1,8 @@
+/* 회원 컨트롤러 */
 const MemberService = require("../../services/member/member-service");
 const HttpStatus = require("http-status");
 
-// 특정 회원 조회
+/* 특정 회원 조회 메소드 - 조만제 */
 exports.findMember = async (req, res) => {
   const result = await MemberService.findMemberByNo(1);
 

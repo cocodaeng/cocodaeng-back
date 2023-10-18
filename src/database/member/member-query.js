@@ -1,4 +1,6 @@
-// 회원 번호로 회원 조회
+/* 회원 쿼리 */
+
+/* 회원 번호로 회원 조회 메소드 - 조만제 */
 exports.findMemberByNo = () => {
   return `
                 SELECT * 
@@ -7,7 +9,7 @@ exports.findMemberByNo = () => {
             `;
 };
 
-// 카카오 아이디로 회원 조회
+/* 카카오 아이디로 회원 조회 메소드 - 조만제 */
 exports.findMemberByKakaoId = () => {
   return `
               SELECT * 
@@ -16,7 +18,7 @@ exports.findMemberByKakaoId = () => {
           `;
 };
 
-// 회원가입
+/* 회원 가입 메소드 - 조만제 */
 exports.registMember = () => {
   return `
             INSERT INTO TBL_MEMBER(

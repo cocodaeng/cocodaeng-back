@@ -1,4 +1,6 @@
-// 다이어리 전체 조회
+/* 다이어리 쿼리 */
+
+/* 다이어리 전체 조회 메소드 - 조만제 */
 exports.findDiaryByNo = () => {
   return `
             SELECT * 

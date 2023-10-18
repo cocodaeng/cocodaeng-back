@@ -1,8 +1,9 @@
+/* 회원 서비스 */
 const getConnection = require("../../database/connection");
 const MemberRepository = require("../../repositories/member/member-repository");
 const MemberDTO = require("../../dto/member-dto");
 
-// 회원 번호로 회원 조회
+/* 회원 번호로 회원 조회 메소드 - 조만제 */
 exports.findMemberByNo = (memberNo) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();
@@ -35,7 +36,7 @@ exports.findMemberByNo = (memberNo) => {
   });
 };
 
-// 카카오 아이디로 회원 조회
+/* 카카오 아이디로 회원 조회 메소드 - 조만제 */
 exports.findMemberByKakaoId = (kakaoId) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();
@@ -71,7 +72,7 @@ exports.findMemberByKakaoId = (kakaoId) => {
   });
 };
 
-// 회원 등록
+/* 회원 가입 메소드 - 조만제 */
 exports.registMember = (member) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();

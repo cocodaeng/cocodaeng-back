@@ -1,7 +1,8 @@
+/* 펫 진행 프로그램 컨트롤러 */
 const PetProgramService = require("../../services/pet/pet-program-service");
 const HttpStatus = require("http-status");
 
-// 특정 펫 진행 프로그램 전체 조회
+/* 특정 펫 진행 프로그램 전체 조회 - 조만제 */
 exports.findPetPrograms = async (req, res) => {
   const result = await PetProgramService.findPetProgramByNo(1);
   let pet_programs = [];
@@ -9,15 +10,15 @@ exports.findPetPrograms = async (req, res) => {
   if (result !== null) {
     for (let i = 0; i < result.length; i++) {
       pet_programs[i] = {
-        pet_program_no: result[i].petProgramNo,
-        program_no: result[i].programNo,
-        pet_no: result[i].petNo,
-        program_name: result[i].programName,
-        pet_start_date: result[i].petStartDate,
-        pet_end_date: result[i].petEndDate,
-        program_seventh_date: result[i].programSeventhDate,
-        program_fourteenth_date: result[i].programFourteenthDate,
-        program_result: result[i].programResult,
+        pet_program_no: result[i].pet_program_no,
+        program_no: result[i].program_no,
+        pet_no: result[i].pet_no,
+        program_name: result[i].program_name,
+        pet_start_date: result[i].pet_start_date,
+        pet_end_date: result[i].pet_end_date,
+        pet_seventh_date: result[i].pet_seventh_date,
+        pet_fourteenth_date: result[i].pet_fourteenth_date,
+        program_result: result[i].program_result,
       };
     }
 

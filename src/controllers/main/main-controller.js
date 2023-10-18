@@ -1,7 +1,8 @@
+/* 홈 화면 컨트롤러 */
 const MainService = require("../../services/main/main-service");
 const HttpStatus = require("http-status");
 
-// 홈 화면 조회
+/* 홈 화면 조회하는 메소드 - 조만제 */
 exports.findMainPage = async (req, res) => {
   const result = await MainService.findMainPage(1);
   let pet_data = [];
@@ -15,13 +16,12 @@ exports.findMainPage = async (req, res) => {
         program_name: result[i].program_name,
         pet_start_date: result[i].pet_start_date,
         pet_end_date: result[i].pet_end_date,
-        program_seventh_date: result[i].program_seventh_date,
-        program_fourteenth_date: result[i].program_fourteenth_date,
-        program_result: result[i].program_result,
+        pet_seventh_date: result[i].pet_seventh_date,
+        pet_fourteenth_date: result[i].pet_fourteenth_date,
+        pet_program_result: result[i].program_result,
         diary_no: result[i].diary_no,
         diary_content: result[i].diary_content,
         fodder_name: result[i].fodder_name,
-        create_date: result[i].create_date,
         pet_status: result[i].pet_status,
         diary_photo_left_eye: result[i].diary_photo_left_eye,
         diary_photo_right_eye: result[i].diary_photo_right_eye,
@@ -29,6 +29,7 @@ exports.findMainPage = async (req, res) => {
         diary_photo_right_ear: result[i].diary_photo_right_ear,
         diary_photo_anal: result[i].diary_photo_anal,
         diary_photo_etc: result[i].diary_photo_etc,
+        create_date: result[i].create_date,
         update_date: result[i].update_date,
         delete_date: result[i].delete_date,
         delete_status: result[i].delete_status,

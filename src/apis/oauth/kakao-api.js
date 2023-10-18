@@ -1,8 +1,9 @@
+/* 카카오 API */
 const redaxios = require("redaxios");
 const TokenDTO = require("../../dto/token-dto");
 const KakaoDTO = require("../../dto/kakao-dto");
 
-// 카카오 토큰 발급
+/* 카카오 토큰 발급 메소드 - 조만제 */
 exports.getKakaoToken = (code) => {
   const reqURL = "https://kauth.kakao.com/oauth/token";
 
@@ -24,7 +25,7 @@ exports.getKakaoToken = (code) => {
     .catch((error) => console.log(error));
 };
 
-// 카카오 회원 정보 조회
+/* 카카오 회원 정보 조회 메소드 - 조만제 */
 exports.getKakaoMemberInfo = (token) => {
   const reqURL = "https://kapi.kakao.com/v2/user/me";
 

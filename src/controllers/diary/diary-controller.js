@@ -1,7 +1,8 @@
+/* 다이어리 컨트롤러 */
 const DiaryService = require("../../services/diary/diary-service");
 const HttpStatus = require("http-status");
 
-// 다이어리 전체 조회
+/* 다이어리 전체 조회 메소드 - 조만제 */
 exports.findDiaries = async (req, res) => {
   const result = await DiaryService.findDiaryByNo(1);
   let diaries = [];
@@ -14,7 +15,6 @@ exports.findDiaries = async (req, res) => {
         pet_program_no: result[i].petProgramNo,
         diary_content: result[i].diaryContent,
         fodder_name: result[i].fodderName,
-        create_date: result[i].createDate,
         pet_status: result[i].petStatus,
         diary_photo_left_eye: result[i].diaryPhotoLeftEye,
         diary_photo_right_eye: result[i].diaryPhotoRightEye,
@@ -22,6 +22,7 @@ exports.findDiaries = async (req, res) => {
         diary_photo_right_ear: result[i].diaryPhotoRightEar,
         diary_photo_anal: result[i].diaryPhotoAnal,
         diary_photo_etc: result[i].diaryPhotoEtc,
+        create_date: result[i].createDate,
         update_date: result[i].updateDate,
         delete_date: result[i].deleteDate,
         delete_status: result[i].deleteStatus,
