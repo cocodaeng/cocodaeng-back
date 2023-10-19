@@ -52,7 +52,7 @@ exports.findDiaryByDiaryNo = (diaryNo) => {
 
       // 조회 실패 시
       if (!result) {
-        const error = new Error(failMessage);
+        const error = new Error("삭제된 게시글 혹은 없는 게시글입니다.");
         error.status = HttpStatus.BAD_REQUEST;
         reject(error);
       }
