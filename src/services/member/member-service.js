@@ -4,23 +4,22 @@ const MemberRepository = require("../../repositories/member/member-repository");
 const MemberDTO = require("../../dto/member-dto");
 
 /* 회원 번호로 회원 조회 메소드 - 조만제 */
-exports.findMemberByNo = (memberNo) => {
+exports.findMemberByMemberNo = (memberNo) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();
-
-    const result = await MemberRepository.findMemberByNo(connection, memberNo);
-
-    if (result !== null) {
+    try {
+      const result = await MemberRepository.findMemberByMemberNo(
+        connection,
+        memberNo
+      );
       // 조회 성공 시
       resolve(result);
-      connection.commit();
-    }
-    if (result === null) {
+    } catch (err) {
       // 조회 실패 시
-      reject(new Error("회원 조회 실패"));
-      connection.rollback();
+      reject(err);
+    } finally {
+      connection.end();
     }
-    connection.end();
   });
 };
 
