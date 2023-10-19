@@ -15,6 +15,7 @@ const kakaoRouter = require("./src/routes/kakao-route");
 const petRouter = require("./src/routes/pet-route");
 const allergyRouter = require("./src/routes/allergy-route");
 const diaryRouter = require("./src/routes/diary-route");
+const HttpStatus = require("http-status");
 
 app.use("/api/v1/main", mainRouter);
 app.use("/api/v1/member", memberRouter);
@@ -27,5 +28,9 @@ app.use("/api/v1/diary", diaryRouter);
 app.listen(9000, () => console.log("Listening on port 9000!"));
 
 app.use((err, req, res, next) => {
-  res.status(err.status || 500).json({ message: err.message });
+  let statusCode = err.status || HttpStatus.INTERNAL_SERVER_ERROR; // 기본값으로 500을 사용
+  res.status(statusCode).json({
+    status: statusCode,
+    message: err.message,
+  });
 });
