@@ -94,19 +94,27 @@ exports.createDiary = async (req, res, next) => {
       },
     });
   } catch (err) {
-    // 에러 발생 시
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
-      status: HttpStatus.INTERNAL_SERVER_ERROR,
-      message: err.message,
-      data: [],
-      links: [
-        {
-          rel: "createDiary",
-          method: "POST",
-          href: "api/v1/diary",
-        },
-      ],
-    });
+    err.links = [
+      {
+        rel: "createDiary",
+        method: "POST",
+        href: "api/v1/diary",
+      },
+    ];
+    next(err);
+    // // 에러 발생 시
+    // res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+    //   status: HttpStatus.INTERNAL_SERVER_ERROR,
+    //   message: err.message,
+    //   data: [],
+    //   links: [
+    //     {
+    //       rel: "createDiary",
+    //       method: "POST",
+    //       href: "api/v1/diary",
+    //     },
+    //   ],
+    // });
   }
 };
 
@@ -139,18 +147,26 @@ exports.updateDiary = async (req, res, next) => {
       data: result.message,
     });
   } catch (err) {
-    // 과정 중 에러 발생 시
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
-      status: HttpStatus.INTERNAL_SERVER_ERROR,
-      message: err.message,
-      links: [
-        {
-          rel: "updateDiary",
-          method: "PUT",
-          href: `api/v1/diary/${req.params.diary_no}`,
-        },
-      ],
-    });
+    err.links = [
+      {
+        rel: "updateDiary",
+        method: "PUT",
+        href: `api/v1/diary/${req.params.diary_no}`,
+      },
+    ];
+    next(err);
+    // // 과정 중 에러 발생 시
+    // res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+    //   status: HttpStatus.INTERNAL_SERVER_ERROR,
+    //   message: err.message,
+    //   links: [
+    //     {
+    //       rel: "updateDiary",
+    //       method: "PUT",
+    //       href: `api/v1/diary/${req.params.diary_no}`,
+    //     },
+    //   ],
+    // });
   }
 };
 
@@ -168,34 +184,28 @@ exports.deleteDiary = async (req, res, next) => {
         data: result.message,
       });
     }
-    // 삭제 상태 변경 실패 시
-    if (result.affectedRows === 0) {
-      res.status(HttpStatus.BAD_REQUEST).send({
-        status: HttpStatus.BAD_REQUEST,
-        message: "잘못된 요청입니다.",
-        data: [],
-        links: [
-          {
-            rel: "deleteDiary",
-            method: "DELETE",
-            href: `api/v1/diary/${diaryNo}`,
-          },
-        ],
-      });
-    }
   } catch (err) {
-    // 과정 중 에러 발생 시
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
-      status: HttpStatus.INTERNAL_SERVER_ERROR,
-      message: err.message,
-      data: [],
-      links: [
-        {
-          rel: "deleteDiary",
-          method: "DELETE",
-          href: `api/v1/diary/${diaryNo}`,
-        },
-      ],
-    });
+    console.log("error");
+    err.links = [
+      {
+        rel: "deleteDiary",
+        method: "DELETE",
+        href: `api/v1/diary/${diaryNo}`,
+      },
+    ];
+    next(err);
+    // // 과정 중 에러 발생 시
+    // res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+    //   status: HttpStatus.INTERNAL_SERVER_ERROR,
+    //   message: err.message,
+    //   data: [],
+    //   links: [
+    //     {
+    //       rel: "deleteDiary",
+    //       method: "DELETE",
+    //       href: `api/v1/diary/${diaryNo}`,
+    //     },
+    //   ],
+    // });
   }
 };

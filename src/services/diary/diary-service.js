@@ -73,7 +73,7 @@ exports.createDiary = (diaryDTO) => {
     try {
       const result = await DiaryRepository.createDiary(connection, diaryDTO);
       // 등록 성공 시
-      if (result) {
+      if (result.affectedRows > 0) {
         connection.commit();
         resolve(result);
       }
@@ -102,7 +102,7 @@ exports.updateDiary = (diaryDTO) => {
     try {
       const result = await DiaryRepository.updateDiary(connection, diaryDTO);
       // 수정 성공 시
-      if (result) {
+      if (result.affectedRows > 0) {
         connection.commit();
         resolve(result);
       }
@@ -130,9 +130,20 @@ exports.deleteDiary = (diaryNo) => {
     connection.beginTransaction();
     try {
       const result = await DiaryRepository.deleteDiary(connection, diaryNo);
-      // 삭제 성공 시 or 삭제 상태 변경 실패 시
-      connection.commit();
-      resolve(result);
+      // 삭제 성공 시
+      if (result.affectedRows > 0) {
+        connection.commit();
+        resolve(result);
+      }
+      console.log("asdfasdf", result.affectedRows);
+      // 삭제 실패 시
+      if (result.affectedRows === 0) {
+        console.log("asdasdfasdfasdff");
+        connection.rollback();
+        const error = new Error(failMessage);
+        error.status = HttpStatus.BAD_REQUEST;
+        reject(error);
+      }
     } catch (err) {
       // 과정 중 에러 발생 시
       connection.rollback();
