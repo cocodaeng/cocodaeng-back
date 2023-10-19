@@ -9,10 +9,9 @@ const PolicyController = require("../controllers/member/policy-controller");
 router.get("/", auth, MemberController.findMember);
 
 // Policy
-router.get("/policyConsent", auth, PolicyController.findPolicyConsent);
+router.get("/policyConsent", PolicyController.findPolicyConsent); // 추 후 auth 미들웨어 추가 필요.
 router.put(
   "/policyConsent/:policyConsent",
-  auth,
   PolicyController.updatePolicyConsent
 );
 

@@ -1,4 +1,4 @@
-// 회원 번호로 이용 정책 동의 여부 조회
+/* 회원 번호로 이용 정책 동의 여부 조회 - 김종완 */
 exports.findPolicyConsent = () => {
   return `
         SELECT policy_consent
@@ -7,7 +7,7 @@ exports.findPolicyConsent = () => {
     `;
 };
 
-// 회원 번호와 이용 정책 동의 여부 업데이트
+/* 회원 번호로 이용 정책 동의 여부 조회 - 김종완 */
 exports.updatePolicyConsent = () => {
   return `
       UPDATE TBL_MEMBER
