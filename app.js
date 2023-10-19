@@ -4,9 +4,9 @@ const bodyParser = require("body-parser");
 const app = express();
 
 app.use(morgan("dev"));
-// app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
 
 const mainRouter = require("./src/routes/main-route");
 const memberRouter = require("./src/routes/member-route");
@@ -32,5 +32,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode).json({
     status: statusCode,
     message: err.message,
+    links: err.links,
   });
 });

@@ -15,7 +15,7 @@ const { nextTick } = require("process");
 exports.findPolicyConsent = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
-    const memberNo = jwtDecode.getMemberNoFromToken(nuil);
+    const memberNo = jwtDecode.getMemberNoFromToken(token);
     console.log("findPolicyConsent 메소드 안에 memberNo", memberNo);
     const result = await PolicyService.findPolicyConsent(memberNo);
     if (result) {

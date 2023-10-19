@@ -78,7 +78,7 @@ class DiaryDTO {
       diaryPhotoEtc,
       new Date(),
       null,
-      null
+      1
     );
   };
 

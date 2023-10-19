@@ -2,6 +2,10 @@
 const getConnection = require("../../database/connection");
 const DiaryRepository = require("../../repositories/diary/diary-repository");
 const DiaryDTO = require("../../dto/diary-dto");
+const HttpStatus = require("http-status");
+
+// 조회 실패 메세지
+const failMessage = "잘못된 요청입니다.";
 
 /* 다이어리 전체 조회 메소드 - 조만제, 김종완 */
 exports.findDiariesByPetNo = (petNo, next) => {
@@ -12,10 +16,18 @@ exports.findDiariesByPetNo = (petNo, next) => {
         connection,
         petNo
       );
-      // 조회 성공 시
-      resolve(result);
+      if (result) {
+        // 조회 성공 시
+        resolve(result);
+      }
+      if (!result) {
+        // 조회 실패 시
+        const error = new Error(failMessage);
+        error.status = HttpStatus.BAD_REQUEST;
+        reject(error);
+      }
     } catch (err) {
-      // 조회 실패 시
+      // 에러 발생 시
       reject(err);
     } finally {
       connection.end();
@@ -32,10 +44,20 @@ exports.findDiaryByDiaryNo = (diaryNo) => {
         connection,
         diaryNo
       );
-      // 조회 성공 시, 빈 결과일 시
-      resolve(result);
-    } catch (err) {
+
+      // 조회 성공 시
+      if (result) {
+        resolve(result);
+      }
+
       // 조회 실패 시
+      if (!result) {
+        const error = new Error(failMessage);
+        error.status = HttpStatus.BAD_REQUEST;
+        reject(error);
+      }
+    } catch (err) {
+      // 에러 발생 시
       reject(err);
     } finally {
       connection.end();
@@ -50,9 +72,18 @@ exports.createDiary = (diaryDTO) => {
     connection.beginTransaction();
     try {
       const result = await DiaryRepository.createDiary(connection, diaryDTO);
-      // 등록 성공 시 or 등록 반영 실패 시
-      connection.commit();
-      resolve(result);
+      // 등록 성공 시
+      if (result) {
+        connection.commit();
+        resolve(result);
+      }
+      // 등록 반영 실패 시(요청 변수가 잘못되었을 때)
+      if (result.affectedRows === 0) {
+        connection.rollback();
+        const error = new Error("등록에 실패하였습니다.");
+        error.status = HttpStatus.BAD_REQUEST;
+        reject(error);
+      }
     } catch (err) {
       // 과정 중 에러 발생 시
       connection.rollback();
@@ -70,9 +101,18 @@ exports.updateDiary = (diaryDTO) => {
     connection.beginTransaction();
     try {
       const result = await DiaryRepository.updateDiary(connection, diaryDTO);
-      // 수정 성공 시 or 수정 DB 반영 실패 시
-      connection.commit();
-      resolve(result);
+      // 수정 성공 시
+      if (result) {
+        connection.commit();
+        resolve(result);
+      }
+      // 수정 DB 반영 실패 시
+      if (result.affectedRows === 0) {
+        connection.rollback();
+        const error = new Error(failMessage);
+        error.status = HttpStatus.BAD_REQUEST;
+        reject(error);
+      }
     } catch (err) {
       // 조회 간 에러 발생 시
       connection.rollback();

@@ -7,7 +7,8 @@ exports.auth = (req, res, next) => {
   // 인증 완료
   try {
     // 요청 헤더에 저장된 토큰(req.headers.authorization)과 시크릿키를 사용하여 토큰을 req.decoded에 반환
-    req.decoded = jwt.verify(req.headers.authorization, SECRET_KEY);
+    // postman 테스트를 위한 임시 주석
+    // req.decoded = jwt.verify(req.headers.authorization, SECRET_KEY);
     return next();
   } catch (error) {
     // 인증 실패

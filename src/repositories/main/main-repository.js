@@ -9,6 +9,9 @@ exports.findPetAllergy = (connection, petNo) => {
         console.log("error: " + err);
         reject(err);
       }
+      if (result.length === 0) {
+        resolve(null);
+      }
       resolve(result);
     });
   });
