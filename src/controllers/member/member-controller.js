@@ -1,10 +1,13 @@
 /* 회원 컨트롤러 */
 const MemberService = require("../../services/member/member-service");
 const HttpStatus = require("http-status");
+const JwtDecode = require("../../utils/jwt-decoder");
 
 /* 특정 회원 조회 메소드 - 조만제 */
 exports.findMember = async (req, res) => {
-  const result = await MemberService.findMemberByNo(1);
+  const token = req.headers.authorization;
+  const memberNo = JwtDecode.getMemberNoFromToken(token);
+  const result = await MemberService.findMemberByMemberNo(memberNo);
 
   if (result !== null) {
     res.status(HttpStatus.OK).send({
@@ -32,9 +35,9 @@ exports.findMember = async (req, res) => {
       code: -999999,
       links: [
         {
-          // rel: "",
-          // method: "POST",
-          // href: "",
+          rel: "findMember",
+          method: "GET",
+          href: "api/v1/member",
         },
       ],
     });

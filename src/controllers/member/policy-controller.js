@@ -11,7 +11,6 @@ const PolicyUpdateRequestDTO = require("../../dto/policy-update-request-dto");
  * @return {error} status, message
  */
 exports.findPolicyConsent = async (req, res) => {
-  console.log(req.headers.authorization);
   const token = req.headers.authorization;
   const memberNo = jwtDecode.getMemberNoFromToken(token);
   console.log("findPolicyConsent 메소드 안에 memberNo", memberNo);

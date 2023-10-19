@@ -2,15 +2,18 @@
 const MemberQuery = require("../../database/member/member-query");
 
 /* 회원 번호로 회원 조회 메소드 - 조만제 */
-exports.findMemberByNo = (connection, memberNo) => {
+exports.findMemberByMemberNo = (connection, memberNo) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      MemberQuery.findMemberByNo(),
+      MemberQuery.findMemberByMemberNo(),
       [memberNo],
       (err, result) => {
         if (err) {
           console.log("error: " + err);
           reject(err);
+        }
+        if (result.length === 0) {
+          resolve(null);
         }
         console.log("result" + result);
         resolve(result);

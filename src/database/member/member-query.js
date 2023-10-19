@@ -1,7 +1,7 @@
 /* 회원 쿼리 */
 
 /* 회원 번호로 회원 조회 메소드 - 조만제 */
-exports.findMemberByNo = () => {
+exports.findMemberByMemberNo = () => {
   return `
                 SELECT * 
                 FROM TBL_MEMBER
