@@ -9,7 +9,6 @@ exports.findPetAllergy = (connection, petNo) => {
         console.log("error: " + err);
         reject(err);
       }
-      console.log("result12:" + result);
       resolve(result);
     });
   });
@@ -23,7 +22,6 @@ exports.findProgramAllergy = (connection) => {
         console.log("error: " + err);
         reject(err);
       }
-      console.log("result34:" + result);
       resolve(result);
     });
   });
@@ -37,10 +35,13 @@ exports.findMainPage = (connection, petNo, targetMonth) => {
       [petNo, targetMonth],
       (err, result) => {
         if (err) {
-          console.log("error: " + err);
+          console.log("error: ", err);
           reject(err);
         }
-        console.log("result" + result);
+        if (result.length === 0) {
+          resolve(null);
+        }
+        console.log("result", result);
         resolve(result);
       }
     );

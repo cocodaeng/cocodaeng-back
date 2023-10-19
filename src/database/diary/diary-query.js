@@ -18,7 +18,7 @@ exports.findDiaryByDiaryNo = () => {
            , pet_program_no
            , diary_content
            , fodder_name
-           , pet_status
+           , pet_health
            , diary_photo_left_eye
            , diary_photo_right_eye
            , diary_photo_left_ear
@@ -26,8 +26,11 @@ exports.findDiaryByDiaryNo = () => {
            , diary_photo_anal
            , diary_photo_etc
            , create_date
+           , update_date
+           , diary_status
         FROM TBL_DIARY
        WHERE diary_no = ?
+         AND diary_status =1
   `;
 };
 
@@ -40,7 +43,7 @@ exports.createDiary = () => {
         pet_program_no,
         diary_content,
         fodder_name,
-        pet_status,
+        pet_health,
         diary_photo_left_eye,
         diary_photo_right_eye,
         diary_photo_left_ear,
@@ -62,7 +65,7 @@ exports.updateDiary = () => {
           pet_program_no = ?,
           diary_content = ?,
           fodder_name = ?,
-          pet_status = ?,
+          pet_health = ?,
           diary_photo_left_eye = ?,
           diary_photo_right_eye = ?,
           diary_photo_left_ear = ?,
@@ -79,7 +82,7 @@ exports.deleteDiary = () => {
   return `
       UPDATE TBL_DIARY
          SET
-          delete_status = ?
+          diary_status = ?
        WHERE diary_no = ?
   `;
 };

@@ -4,10 +4,10 @@ const DiaryController = require("../controllers/diary/diary-controller");
 const multer = require("multer");
 const upload = multer({ dest: "./uploads" });
 
-router.get("/findDiaries", DiaryController.findDiaries);
-router.get("/:diaryNo", DiaryController.findDiaryByDiaryNo);
+router.get("/findDiaries/:pet_no", DiaryController.findDiaries);
+router.get("/:diary_no", DiaryController.findDiaryByDiaryNo);
 router.post("/", upload.any(), DiaryController.createDiary);
-router.put("/:diaryNo", upload.any(), DiaryController.updateDiary);
-router.delete("/:diaryNo", DiaryController.deleteDiary);
+router.put("/:diary_no", upload.any(), DiaryController.updateDiary);
+router.delete("/:diary_no", DiaryController.deleteDiary);
 
 module.exports = router;

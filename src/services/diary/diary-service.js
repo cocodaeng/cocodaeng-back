@@ -3,23 +3,23 @@ const getConnection = require("../../database/connection");
 const DiaryRepository = require("../../repositories/diary/diary-repository");
 const DiaryDTO = require("../../dto/diary-dto");
 
-/* 다이어리 전체 조회 메소드 - 조만제 */
-exports.findDiariesByPetNo = (petNo) => {
+/* 다이어리 전체 조회 메소드 - 조만제, 김종완 */
+exports.findDiariesByPetNo = (petNo, next) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();
-    const result = await DiaryRepository.findDiaryByNo(connection, petNo);
-
-    if (result !== null) {
+    try {
+      const result = await DiaryRepository.findDiariesByPetNo(
+        connection,
+        petNo
+      );
       // 조회 성공 시
       resolve(result);
-      connection.commit();
-    }
-    if (result === null) {
+    } catch (err) {
       // 조회 실패 시
-      reject(new Error("다이어리 전체 조회 실패"));
-      connection.rollback();
+      reject(err);
+    } finally {
+      connection.end();
     }
-    connection.end();
   });
 };
 

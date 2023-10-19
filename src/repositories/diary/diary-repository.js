@@ -13,6 +13,9 @@ exports.findDiariesByPetNo = (connection, petNo) => {
           console.log("error: " + err);
           reject(err);
         }
+        if (result.length === 0) {
+          resolve(null);
+        }
         // 정상 조회 시
         console.log("result" + result);
         resolve(result);
@@ -53,7 +56,7 @@ exports.createDiary = (connection, diaryDTO) => {
         diaryDTO.petProgramNo,
         diaryDTO.diaryContent,
         diaryDTO.fodderName,
-        diaryDTO.petStatus,
+        diaryDTO.petHealth,
         diaryDTO.diaryPhotoLeftEye,
         diaryDTO.diaryPhotoRightEye,
         diaryDTO.diaryPhotoLeftEar,
@@ -84,7 +87,7 @@ exports.updateDiary = (connection, diaryDTO) => {
         diaryDTO.petProgramNo,
         diaryDTO.diaryContent,
         diaryDTO.fodderName,
-        diaryDTO.petStatus,
+        diaryDTO.petHealth,
         diaryDTO.diaryPhotoLeftEye,
         diaryDTO.diaryPhotoRightEye,
         diaryDTO.diaryPhotoLeftEar,

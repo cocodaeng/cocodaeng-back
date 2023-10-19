@@ -4,7 +4,7 @@ class DiaryDTO {
   petProgramNo;
   diaryContent;
   fodderName;
-  petStatus;
+  petHealth;
   diaryPhotoLeftEye;
   diaryPhotoRightEye;
   diaryPhotoLeftEar;
@@ -13,7 +13,7 @@ class DiaryDTO {
   diaryPhotoEtc;
   createDate;
   updateDate;
-  deleteStatus;
+  diarytStatus;
 
   constructor(
     diaryNo,
@@ -21,7 +21,7 @@ class DiaryDTO {
     petProgramNo,
     diaryContent,
     fodderName,
-    petStatus,
+    petHealth,
     diaryPhotoLeftEye,
     diaryPhotoRightEye,
     diaryPhotoLeftEar,
@@ -30,14 +30,14 @@ class DiaryDTO {
     diaryPhotoEtc,
     createDate,
     updateDate,
-    deleteStatus
+    diarytStatus
   ) {
     this.diaryNo = diaryNo;
     this.petNo = petNo;
     this.petProgramNo = petProgramNo;
     this.diaryContent = diaryContent;
     this.fodderName = fodderName;
-    this.petStatus = petStatus;
+    this.petHealth = petHealth;
     this.diaryPhotoLeftEye = diaryPhotoLeftEye;
     this.diaryPhotoRightEye = diaryPhotoRightEye;
     this.diaryPhotoLeftEar = diaryPhotoLeftEar;
@@ -46,7 +46,7 @@ class DiaryDTO {
     this.diaryPhotoEtc = diaryPhotoEtc;
     this.createDate = createDate;
     this.updateDate = updateDate;
-    this.deleteStatus = deleteStatus;
+    this.diarytStatus = diarytStatus;
   }
 
   static fromCreateDiary = (
@@ -55,7 +55,7 @@ class DiaryDTO {
     petProgramNo,
     diaryContent,
     fodderName,
-    petStatus,
+    petHealth,
     diaryPhotoLeftEye,
     diaryPhotoRightEye,
     diaryPhotoLeftEar,
@@ -69,7 +69,7 @@ class DiaryDTO {
       petProgramNo,
       diaryContent,
       fodderName,
-      petStatus,
+      petHealth,
       diaryPhotoLeftEye,
       diaryPhotoRightEye,
       diaryPhotoLeftEar,
@@ -88,7 +88,7 @@ class DiaryDTO {
     petProgramNo,
     diaryContent,
     fodderName,
-    petStatus,
+    petHealth,
     diaryPhotoLeftEye,
     diaryPhotoRightEye,
     diaryPhotoLeftEar,
@@ -96,7 +96,7 @@ class DiaryDTO {
     diaryPhotoAnal,
     diaryPhotoEtc,
     createDate,
-    deleteStatus
+    diarytStatus
   ) => {
     return new DiaryDTO(
       diaryNo,
@@ -104,7 +104,7 @@ class DiaryDTO {
       petProgramNo,
       diaryContent,
       fodderName,
-      petStatus,
+      petHealth,
       diaryPhotoLeftEye,
       diaryPhotoRightEye,
       diaryPhotoLeftEar,
@@ -113,7 +113,7 @@ class DiaryDTO {
       diaryPhotoEtc,
       createDate,
       new Date(),
-      deleteStatus
+      diarytStatus
     );
   };
 }

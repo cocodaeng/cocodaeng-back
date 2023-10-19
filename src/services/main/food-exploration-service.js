@@ -12,13 +12,14 @@ exports.findPetJoinProgram = (petNo) => {
       petNo
     );
 
+    // 조회 성공 시
     if (result !== null) {
       resolve(result);
       connection.commit();
     }
 
+    // 조회 실패 시
     if (result === null) {
-      // 조회 실패 시
       reject(new Error("회원 조회 실패"));
       connection.rollback();
     }

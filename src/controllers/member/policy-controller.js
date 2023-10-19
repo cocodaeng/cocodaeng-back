@@ -20,13 +20,13 @@ exports.findPolicyConsent = async (req, res) => {
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
       message: "정상적으로 조회되었습니다.",
-      policyConsent: result[0].policyConsent,
+      data: result[0].policy_consent,
     });
   } else {
     res.status(HttpStatus.BAD_REQUEST).send({
       status: HttpStatus.BAD_REQUEST,
       message: "일치하는 회원이 존재하지 않습니다.",
-      policyConsent: result,
+      data: result,
     });
   }
 };
@@ -41,7 +41,7 @@ exports.findPolicyConsent = async (req, res) => {
 exports.updatePolicyConsent = async (req, res) => {
   const token = req.headers.authorization;
   const memberNo = jwtDecode.getMemberNoFromToken(token);
-  const policyConsent = req.params.policyConsent;
+  const policyConsent = req.params.policy_consent;
 
   try {
     // PolicyConsent 유효성 검증

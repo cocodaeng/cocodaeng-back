@@ -10,7 +10,7 @@ exports.findMember = async (req, res) => {
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
       message: "회원 조회 성공",
-      member: {
+      data: {
         member_no: result[0].member_no,
         member_name: result[0].member_name,
         kakao_id: result[0].kakao_id,
