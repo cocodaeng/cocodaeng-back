@@ -2,19 +2,27 @@
 const PetQuery = require("../../database/pet/pet-query");
 
 /* 회원 번호로 펫 조회하는 메소드 - 조만제 */
-exports.findPetByNo = (connection, memberNo) => {
+exports.findPetByMemberNo = (connection, memberNo) => {
   return new Promise((resolve, reject) => {
-    connection.query(PetQuery.findPetByNo(), [memberNo], (err, result) => {
-      if (err) {
-        console.log("error: " + err);
-        reject(err);
+    connection.query(
+      PetQuery.findPetByMemberNo(),
+      [memberNo],
+      (err, result) => {
+        if (err) {
+          console.log("error: " + err);
+          reject(err);
+        }
+        if (result.length === 0) {
+          resolve(null);
+        }
+        console.log(result);
+        resolve(result);
       }
-      console.log(result);
-      resolve(result);
-    });
+    );
   });
 };
 
+/* 신규 펫 등록 메소드 - 김종완 */
 exports.createPet = (connection, petDTO) => {
   return new Promise((resolve, reject) => {
     connection.query(

@@ -1,7 +1,7 @@
 /* 펫 쿼리 */
 
 /* 회원 번호로 펫 조회하는 메소드 - 조만제 */
-exports.findPetByNo = () => {
+exports.findPetByMemberNo = () => {
   return `
                   SELECT * 
                   FROM TBL_PETS

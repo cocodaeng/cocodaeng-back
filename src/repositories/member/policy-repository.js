@@ -1,33 +1,27 @@
 const PolicyQuery = require("../../database/member/policy-query");
 
+/* 회원 번호로 이용 정책 동의 여부 조회 - 김종완 */
 exports.findPolicyConsent = (connection, memberNo) => {
   return new Promise((resolve, reject) => {
-    console.log("findPolicyConsent 여긴 레포지토리");
     connection.query(
       PolicyQuery.findPolicyConsent(memberNo),
       [memberNo],
       (err, result) => {
         if (err) {
-          console.error("findPolicyConsent 에러 발생");
           reject(err);
         }
         if (result.length === 0) {
           resolve(null);
         }
-
-        console.log("레포지토리 result", result);
         resolve(result);
       }
     );
   });
 };
 
+/* 회원 번호로 이용 정책 동의 여부 조회 - 김종완 */
 exports.updatePolicyConsent = (connection, policyUpdateRequestDTO) => {
   return new Promise((resolve, reject) => {
-    console.log(
-      "updatePolicyConsent repository",
-      JSON.stringify(policyUpdateRequestDTO)
-    );
     console.log(policyUpdateRequestDTO);
     connection.query(
       PolicyQuery.updatePolicyConsent(),
