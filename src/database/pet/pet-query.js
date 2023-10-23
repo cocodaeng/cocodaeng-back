@@ -1,7 +1,7 @@
 /* 펫 쿼리 */
 
 /* 회원 번호로 펫 조회하는 메소드 - 조만제 */
-exports.findPetByMemberNo = () => {
+exports.findPetsByMemberNo = () => {
   return `
                   SELECT * 
                   FROM TBL_PETS
@@ -13,7 +13,7 @@ exports.findPetByMemberNo = () => {
 // 펫 등록
 exports.createPet = () => {
   return `
-        INSERT INTO TBL_PET
+        INSERT INTO TBL_PETS
             (member_no, bread_no, pet_name, pet_profile_picture,
                 pet_age, pet_weight, create_date, pet_status)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)

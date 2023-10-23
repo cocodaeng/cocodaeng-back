@@ -102,19 +102,6 @@ exports.createDiary = async (req, res, next) => {
       },
     ];
     next(err);
-    // // 에러 발생 시
-    // res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
-    //   status: HttpStatus.INTERNAL_SERVER_ERROR,
-    //   message: err.message,
-    //   data: [],
-    //   links: [
-    //     {
-    //       rel: "createDiary",
-    //       method: "POST",
-    //       href: "api/v1/diary",
-    //     },
-    //   ],
-    // });
   }
 };
 
@@ -155,18 +142,6 @@ exports.updateDiary = async (req, res, next) => {
       },
     ];
     next(err);
-    // // 과정 중 에러 발생 시
-    // res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
-    //   status: HttpStatus.INTERNAL_SERVER_ERROR,
-    //   message: err.message,
-    //   links: [
-    //     {
-    //       rel: "updateDiary",
-    //       method: "PUT",
-    //       href: `api/v1/diary/${req.params.diary_no}`,
-    //     },
-    //   ],
-    // });
   }
 };
 
@@ -194,18 +169,5 @@ exports.deleteDiary = async (req, res, next) => {
       },
     ];
     next(err);
-    // // 과정 중 에러 발생 시
-    // res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
-    //   status: HttpStatus.INTERNAL_SERVER_ERROR,
-    //   message: err.message,
-    //   data: [],
-    //   links: [
-    //     {
-    //       rel: "deleteDiary",
-    //       method: "DELETE",
-    //       href: `api/v1/diary/${diaryNo}`,
-    //     },
-    //   ],
-    // });
   }
 };

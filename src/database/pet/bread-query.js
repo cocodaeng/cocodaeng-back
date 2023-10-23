@@ -1,4 +1,4 @@
-// 견종 전체 조회
+/* 전체 견종 조회 - 김종완 */
 exports.findAllBreads = () => {
   return `
         SELECT *
@@ -6,16 +6,17 @@ exports.findAllBreads = () => {
     `;
 };
 
-// 견종 번호로 견종 이름 조회
+/* 견종 번호로 견종 이름 조회 - 김종완 */
 exports.findBreadByBreadNo = () => {
   return `
-        SELECT bread_name
+        SELECT bread_no
+             , bread_name
           FROM TBL_BREAD
          WHERE bread_no =?
     `;
 };
 
-// 견종 등록
+/* 견종 등록 - 김종완 */
 exports.createBread = () => {
   return `
         INSERT 
@@ -25,7 +26,7 @@ exports.createBread = () => {
     `;
 };
 
-// 견종 수정
+/* 견종 수정 - 김종완 */
 exports.updateBread = () => {
   return `
         UPDATE TBL_BREAD
@@ -34,7 +35,7 @@ exports.updateBread = () => {
     `;
 };
 
-// 견종 삭제
+/* 견종 삭제 - 김종완 */
 exports.deleteBread = () => {
   return `
         DELETE FROM TBL_BREAD

@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const HttpStatus = require("http-status");
 const app = express();
 
 app.use(morgan("dev"));
@@ -15,7 +16,6 @@ const kakaoRouter = require("./src/routes/kakao-route");
 const petRouter = require("./src/routes/pet-route");
 const allergyRouter = require("./src/routes/allergy-route");
 const diaryRouter = require("./src/routes/diary-route");
-const HttpStatus = require("http-status");
 
 app.use("/api/v1/main", mainRouter);
 app.use("/api/v1/member", memberRouter);

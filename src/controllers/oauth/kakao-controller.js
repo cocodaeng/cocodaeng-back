@@ -23,9 +23,9 @@ exports.kakaoCallBack = (req, res) => {
       code: -999999,
       links: [
         {
-          // rel: "",
-          // method: "POST",
-          // href: "",
+          rel: "kakaoCallBack",
+          method: "GET",
+          href: "api/v1/oauth/kakao",
         },
       ],
     });

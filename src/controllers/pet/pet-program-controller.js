@@ -1,13 +1,21 @@
 /* 펫 진행 프로그램 컨트롤러 */
 const PetProgramService = require("../../services/pet/pet-program-service");
 const HttpStatus = require("http-status");
+const JwtDecode = require("../../utils/jwt-decoder");
+const PetService = require("../../services/pet/pet-service");
 
 /* 특정 펫 진행 프로그램 전체 조회 - 조만제 */
-exports.findPetPrograms = async (req, res) => {
-  const result = await PetProgramService.findPetProgramByNo(1);
-  let pet_programs = [];
+exports.findPetProgramsByPetNo = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
+    const memberNo = JwtDecode.getMemberNoFromToken(token);
+    const petNo = await PetService.findPetsByMemberNo(memberNo).then(
+      (pet) => pet[0].pet_no
+    );
+    const result = await PetProgramService.findPetProgramsByPetNo(petNo);
 
-  if (result !== null) {
+    let pet_programs = [];
+
     for (let i = 0; i < result.length; i++) {
       pet_programs[i] = {
         pet_program_no: result[i].pet_program_no,
@@ -25,21 +33,16 @@ exports.findPetPrograms = async (req, res) => {
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
       message: "특정 펫 진행 프로그램 전체 조회 성공",
-      pet_programs: pet_programs,
+      data: result,
     });
-  }
-  if (result === null) {
-    res.status(HttpStatus.NOT_FOUND).send({
-      status: HttpStatus.NOT_FOUND, // 404
-      message: "특정 펫 진행 프로그램 전체 조회 실패",
-      code: -999999,
-      links: [
-        {
-          // rel: "",
-          // method: "POST",
-          // href: "",
-        },
-      ],
-    });
+  } catch (err) {
+    err.links = [
+      {
+        rel: "findPetProgramsByPetNo",
+        method: "GET",
+        href: "api/v1/pet/findPetPrograms",
+      },
+    ];
+    next(err);
   }
 };
