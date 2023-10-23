@@ -8,7 +8,7 @@ exports.decodeJWT = (bearerToken) => {
 
 exports.getMemberNoFromToken = (token) => {
   const jwtoken = this.decodeJWT(token);
-  const memberNo = jwtoken.memberNo;
+  const memberNo = jwtoken.member_no;
   return memberNo;
 };
 

@@ -11,7 +11,7 @@ router.get("/", auth, MemberController.findMember);
 // Policy
 router.get("/policyConsent", auth, PolicyController.findPolicyConsent); // 추 후 auth 미들웨어 추가 필요.
 router.put(
-  "/policyConsent/:policyConsent",
+  "/policyConsent/:policy_consent",
   auth,
   PolicyController.updatePolicyConsent
 );

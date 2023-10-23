@@ -1,4 +1,5 @@
 /* 홈 화면 서비스 */
+const HttpStatus = require("http-status");
 const getConnection = require("../../database/connection");
 const MainRepository = require("../../repositories/main/main-repository");
 const PetRepository = require("../../repositories/pet/pet-repository");
@@ -14,7 +15,9 @@ exports.findMainPage = (memberNo) => {
       );
       // 펫 조회 실패 시
       if (!petResult) {
-        reject(new Error("펫 조회 실패"));
+        const error = new Error("펫 조회에 실패하였습니다.");
+        error.status = HttpStatus.BAD_REQUEST;
+        reject(error);
       }
       // 펫 조회 성공 시
       const petNo = petResult[0].pet_no;

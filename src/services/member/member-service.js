@@ -1,4 +1,5 @@
 /* 회원 서비스 */
+const HttpStatus = require("http-status");
 const getConnection = require("../../database/connection");
 const MemberRepository = require("../../repositories/member/member-repository");
 const MemberDTO = require("../../dto/member-dto");
@@ -12,8 +13,15 @@ exports.findMemberByMemberNo = (memberNo) => {
         connection,
         memberNo
       );
-      // 조회 성공 시
-      resolve(result);
+      if (result) {
+        // 조회 성공 시
+        resolve(result);
+      }
+      if (!result) {
+        const error = new Error("회원 조회에 실패하였습니다.");
+        error.status = HttpStatus.BAD_REQUEST;
+        reject(error);
+      }
     } catch (err) {
       // 조회 실패 시
       reject(err);
@@ -28,12 +36,12 @@ exports.findMemberByKakaoId = (kakaoId) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();
 
-    const result = await MemberRepository.findMemberByKakaoId(
-      connection,
-      kakaoId
-    );
+    try {
+      const result = await MemberRepository.findMemberByKakaoId(
+        connection,
+        kakaoId
+      );
 
-    if (result !== null) {
       // 조회 성공 시
       const member = new MemberDTO(
         result.userNo,
@@ -48,14 +56,13 @@ exports.findMemberByKakaoId = (kakaoId) => {
         leaveStatus
       );
       resolve(member);
-      connection.commit();
+    } catch (err) {
+      const error = new Error("회원 조회에 실패하였습니다.");
+      error.status = HttpStatus.BAD_REQUEST;
+      reject(err);
+    } finally {
+      connection.end();
     }
-    if (result === null) {
-      // 조회 실패 시
-      reject(new Error("회원 조회 실패"));
-      connection.rollback();
-    }
-    connection.end();
   });
 };
 
@@ -63,7 +70,6 @@ exports.findMemberByKakaoId = (kakaoId) => {
 exports.registMember = (member) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();
-
     connection.beginTransaction();
 
     try {
@@ -72,7 +78,6 @@ exports.registMember = (member) => {
         connection,
         member.kakaoId
       );
-      console.log(findMember);
 
       // 아이디 중복된 회원 없으면 회원가입
       if (findMember.length === 0) {
@@ -84,10 +89,16 @@ exports.registMember = (member) => {
           result.insertId
         );
         console.log("insertedMember : ", insertedMember);
-
-        connection.commit();
-        console.log("commit successfully");
-        resolve(insertedMember);
+        if (insertedMember.affectedRows > 0) {
+          connection.commit();
+          resolve(insertedMember);
+        }
+        if (insertedMember.affectedRows === 0) {
+          connection.rollback();
+          const error = new Error("등록에 실패하였습니다.");
+          error.status = HttpStatus.BAD_REQUEST;
+          reject(error);
+        }
       }
       resolve(null);
     } catch (err) {

@@ -4,12 +4,11 @@ const HttpStatus = require("http-status");
 const JwtDecode = require("../../utils/jwt-decoder");
 
 /* 특정 회원 조회 메소드 - 조만제 */
-exports.findMember = async (req, res) => {
-  const token = req.headers.authorization;
-  const memberNo = JwtDecode.getMemberNoFromToken(token);
-  const result = await MemberService.findMemberByMemberNo(memberNo);
-
-  if (result !== null) {
+exports.findMember = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
+    const memberNo = JwtDecode.getMemberNoFromToken(token);
+    const result = await MemberService.findMemberByMemberNo(memberNo);
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
       message: "회원 조회 성공",
@@ -27,19 +26,14 @@ exports.findMember = async (req, res) => {
         last_login_time: result[0].last_login_time,
       },
     });
-  }
-  if (result === null) {
-    res.status(HttpStatus.NOT_FOUND).send({
-      status: HttpStatus.NOT_FOUND, // 404
-      message: "회원 조회 실패",
-      code: -999999,
-      links: [
-        {
-          rel: "findMember",
-          method: "GET",
-          href: "api/v1/member",
-        },
-      ],
-    });
+  } catch (err) {
+    err.links = [
+      {
+        rel: "findMember",
+        method: "GET",
+        href: "api/v1/member",
+      },
+    ];
+    next(err);
   }
 };

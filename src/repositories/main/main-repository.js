@@ -38,13 +38,11 @@ exports.findMainPage = (connection, petNo, targetMonth) => {
       [petNo, targetMonth],
       (err, result) => {
         if (err) {
-          console.log("error: ", err);
           reject(err);
         }
         if (result.length === 0) {
           resolve(null);
         }
-        console.log("result", result);
         resolve(result);
       }
     );
@@ -60,10 +58,8 @@ exports.insertPetAllergyProgram = (connection, allergyProgramNo, petNo) => {
       [allergyProgramNo, petNo, allergyProgramNo],
       (err, result) => {
         if (err) {
-          console.log("error: " + err);
           reject(err);
         }
-        console.log("result" + result);
         resolve(result);
       }
     );

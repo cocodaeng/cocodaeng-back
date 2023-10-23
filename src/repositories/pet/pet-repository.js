@@ -2,20 +2,18 @@
 const PetQuery = require("../../database/pet/pet-query");
 
 /* 회원 번호로 펫 조회하는 메소드 - 조만제 */
-exports.findPetByMemberNo = (connection, memberNo) => {
+exports.findPetsByMemberNo = (connection, memberNo) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      PetQuery.findPetByMemberNo(),
+      PetQuery.findPetsByMemberNo(),
       [memberNo],
       (err, result) => {
         if (err) {
-          console.log("error: " + err);
           reject(err);
         }
         if (result.length === 0) {
           resolve(null);
         }
-        console.log(result);
         resolve(result);
       }
     );

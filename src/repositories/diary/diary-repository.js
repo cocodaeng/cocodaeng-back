@@ -13,6 +13,7 @@ exports.findDiariesByPetNo = (connection, petNo) => {
           console.log("error: " + err);
           reject(err);
         }
+        // 빈 결과 조회
         if (result.length === 0) {
           resolve(null);
         }

@@ -16,12 +16,13 @@ exports.findDiariesByPetNo = (petNo, next) => {
         connection,
         petNo
       );
+
+      // 조회 성공 시
       if (result) {
-        // 조회 성공 시
         resolve(result);
       }
+      // 조회 실패 시
       if (!result) {
-        // 조회 실패 시
         const error = new Error(failMessage);
         error.status = HttpStatus.BAD_REQUEST;
         reject(error);
@@ -70,6 +71,7 @@ exports.createDiary = (diaryDTO) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();
     connection.beginTransaction();
+
     try {
       const result = await DiaryRepository.createDiary(connection, diaryDTO);
       // 등록 성공 시
@@ -114,7 +116,7 @@ exports.updateDiary = (diaryDTO) => {
         reject(error);
       }
     } catch (err) {
-      // 조회 간 에러 발생 시
+      // 에러 발생 시
       connection.rollback();
       reject(err);
     } finally {

@@ -30,10 +30,11 @@ exports.findMemberByKakaoId = (connection, kakaoId) => {
       [kakaoId],
       (err, result) => {
         if (err) {
-          console.log("error: " + err);
           reject(err);
         }
-        console.log("result" + result);
+        if (result.length === 0) {
+          resolve(null);
+        }
         resolve(result);
       }
     );
@@ -50,8 +51,6 @@ exports.registMember = (connection, member) => {
         if (err) {
           reject(err);
         }
-        console.log("repo result : ", result);
-
         resolve(result);
       }
     );

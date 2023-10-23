@@ -4,7 +4,7 @@ const HttpStatus = require("http-status");
 const JwtDecode = require("../../utils/jwt-decoder");
 
 /* 홈 화면 조회하는 메소드 - 조만제 */
-exports.findMainPage = async (req, res) => {
+exports.findMainPage = async (req, res, next) => {
   const token = req.headers.authorization;
   const memberNo = JwtDecode.getMemberNoFromToken(token);
   try {

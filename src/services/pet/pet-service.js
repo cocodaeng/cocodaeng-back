@@ -1,26 +1,36 @@
 /* 펫 서비스 */
+const HttpStatus = require("http-status");
 const getConnection = require("../../database/connection");
 const PetRepository = require("../../repositories/pet/pet-repository");
 const PetDTO = require("../../dto/pet-dto");
 
 /* 회원 번호로 펫 조회하는 메소드 - 조만제 */
-exports.findPet = (memberNo) => {
+exports.findPetsByMemberNo = (memberNo) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();
-
-    const result = await PetRepository.findPetByNo(connection, memberNo);
-
-    if (result !== null) {
+    try {
+      const result = await PetRepository.findPetsByMemberNo(
+        connection,
+        memberNo
+      );
+      console.log(result);
       // 조회 성공 시
-      resolve(result);
-      connection.commit();
-    }
-    if (result === null) {
+      if (result) {
+        resolve(result);
+      }
+
       // 조회 실패 시
-      reject(new Error("회원 조회 실패"));
-      connection.rollback();
+      if (!result) {
+        const error = new Error("회원 조회 실패");
+        error.status = HttpStatus.BAD_REQUEST;
+        reject(error);
+      }
+    } catch (err) {
+      // 에러 발생 시
+      reject(err);
+    } finally {
+      connection.end();
     }
-    connection.end();
   });
 };
 
@@ -30,8 +40,16 @@ exports.createPet = (petDTO) => {
     connection.beginTransaction();
     try {
       const result = await PetRepository.createPet(connection, petDTO);
-      connection.commit();
-      resolve(result);
+      if (result.affectedRows > 0) {
+        connection.commit();
+        resolve(result);
+      }
+      if (result.affectedRows === 0) {
+        connection.rollback();
+        const error = new Error("펫 생성에 실패하였습니다.");
+        error.status = HttpStatus.BAD_REQUEST;
+        reject(error);
+      }
     } catch (err) {
       connection.rollback();
       reject(err);

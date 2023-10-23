@@ -1,3 +1,4 @@
+const HttpStatus = require("http-status");
 const getConnection = require("../../database/connection");
 const AllergyRepository = require("../../repositories/allergy/allergy-repository");
 
@@ -7,8 +8,15 @@ exports.findAllAllergies = () => {
     const connection = getConnection();
     try {
       const result = await AllergyRepository.findAllAllergies(connection);
-      // 조회 성공 시
-      resolve(result);
+      if (result) {
+        // 조회 성공 시
+        resolve(result);
+      }
+      if (!result) {
+        const error = new Error("조회에 실패하였습니다.");
+        error.status = HttpStatus.BAD_REQUEST;
+        reject(error);
+      }
     } catch (err) {
       // 조회 중 에러 발생 시
       reject(err);

@@ -1,5 +1,5 @@
 const HttpStatus = require("http-status");
-const jwtDecode = require("../../utils/jwt-decoder");
+const JwtDecode = require("../../utils/jwt-decoder");
 const PolicyService = require("../../services/member/policy-service");
 const PolicyUpdateRequestDTO = require("../../dto/policy-update-request-dto");
 const { nextTick } = require("process");
@@ -15,26 +15,25 @@ const { nextTick } = require("process");
 exports.findPolicyConsent = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
-    const memberNo = jwtDecode.getMemberNoFromToken(token);
+    const memberNo = JwtDecode.getMemberNoFromToken(token);
     console.log("findPolicyConsent 메소드 안에 memberNo", memberNo);
     const result = await PolicyService.findPolicyConsent(memberNo);
-    if (result) {
-      res.status(HttpStatus.OK).send({
-        status: HttpStatus.OK,
-        message: "정상적으로 조회되었습니다.",
-        data: {
-          policy_consent: result[0].policy_consent,
-        },
-      });
-    }
-    if (!result) {
-      res.status(HttpStatus.BAD_REQUEST).send({
-        status: HttpStatus.BAD_REQUEST,
-        message: "일치하는 회원이 존재하지 않습니다.",
-        data: result,
-      });
-    }
+
+    res.status(HttpStatus.OK).send({
+      status: HttpStatus.OK,
+      message: "정상적으로 조회되었습니다.",
+      data: {
+        policy_consent: result[0].policy_consent,
+      },
+    });
   } catch (err) {
+    err.links = [
+      {
+        rel: "findPolicyConsent",
+        method: "GET",
+        href: `api/v1/member/policyConsent`,
+      },
+    ];
     // 에러 핸들링 미들웨어로 전달.
     next(err);
   }
@@ -51,7 +50,7 @@ exports.findPolicyConsent = async (req, res, next) => {
 exports.updatePolicyConsent = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
-    const memberNo = jwtDecode.getMemberNoFromToken(token);
+    const memberNo = JwtDecode.getMemberNoFromToken(token);
     const policyConsent = req.params.policy_consent;
 
     // PolicyConsent 유효성 검증, 실패 시 에러 발생으로 자동 핸들링
@@ -60,19 +59,18 @@ exports.updatePolicyConsent = async (req, res, next) => {
     const result = await PolicyService.updatePolicyConsent(
       new PolicyUpdateRequestDTO(memberNo, policyConsent)
     );
-    if (result) {
-      res.status(HttpStatus.OK).send({
-        status: HttpStatus.OK,
-        message: "정상적으로 수정되었습니다.",
-      });
-    }
-    if (!result) {
-      res.status(HttpStatus.BAD_REQUEST).send({
-        status: HttpStatus.BAD_REQUEST,
-        message: "일치하는 회원이 존재하지 않습니다.",
-      });
-    }
+    res.status(HttpStatus.OK).send({
+      status: HttpStatus.OK,
+      message: "정상적으로 수정되었습니다.",
+    });
   } catch (err) {
+    err.links = [
+      {
+        rel: "updatePolicyConsent",
+        method: "PUT",
+        href: `api/v1/member/policyConsent/${policyConsent}`,
+      },
+    ];
     next(err);
   }
 };

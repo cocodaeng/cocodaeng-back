@@ -19,7 +19,7 @@ exports.findPolicyConsent = (connection, memberNo) => {
   });
 };
 
-/* 회원 번호로 이용 정책 동의 여부 조회 - 김종완 */
+/* 회원 번호로 이용 정책 동의 여부 업데이트 - 김종완 */
 exports.updatePolicyConsent = (connection, policyUpdateRequestDTO) => {
   return new Promise((resolve, reject) => {
     console.log(policyUpdateRequestDTO);
@@ -29,9 +29,6 @@ exports.updatePolicyConsent = (connection, policyUpdateRequestDTO) => {
       (error, result) => {
         if (error) {
           reject(err);
-        }
-        if (result.affectedRows === 0) {
-          resolve(null);
         }
         resolve(result);
       }

@@ -28,10 +28,15 @@ exports.findPolicyConsent = (memberNo) => {
         memberNo
       );
       console.log("service단 findPolicyConsent result: ", result);
-      connection.commit();
-      resolve(result);
+      if (result) {
+        resolve(result);
+      }
+      if (!result) {
+        const error = new Error("이용 정책 동의 여부 조회에 실패하였습니다.");
+        error.status = HttpStatus.BAD_REQUEST;
+        reject(error);
+      }
     } catch (err) {
-      connection.rollback();
       reject(err);
     } finally {
       connection.end();
@@ -39,7 +44,7 @@ exports.findPolicyConsent = (memberNo) => {
   });
 };
 
-/* 회원 번호로 이용 정책 동의 여부 조회 - 김종완 */
+/* 회원 번호로 이용 정책 동의 여부 업데이트 - 김종완 */
 exports.updatePolicyConsent = (policyUpdateRequestDTO) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();
@@ -50,8 +55,20 @@ exports.updatePolicyConsent = (policyUpdateRequestDTO) => {
         connection,
         policyUpdateRequestDTO
       );
-      connection.commit();
-      resolve(result);
+      // 수정 성공 시
+      if (result.affectedRows > 0) {
+        connection.commit();
+        resolve(result);
+      }
+      // 수정 사항 DB 반영 실패 시
+      if (result.affectedRows === 0) {
+        connection.rollback();
+        const error = new Error(
+          "이용 정책 동의 여부 업데이트에 실패하였습니다."
+        );
+        error.status = HttpStatus.BAD_REQUEST;
+        reject(error);
+      }
     } catch (err) {
       connection.rollback();
       reject(err);
