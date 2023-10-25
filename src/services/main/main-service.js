@@ -9,7 +9,7 @@ exports.findMainPage = (memberNo) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();
     try {
-      const petResult = await PetRepository.findPetByMemberNo(
+      const petResult = await PetRepository.findPetsByMemberNo(
         connection,
         memberNo
       );

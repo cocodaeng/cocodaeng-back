@@ -33,9 +33,9 @@ exports.findBreadByBreadNo = async (req, res, next) => {
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
       message: "성공적으로 조회되었습니다.",
-      result: {
-        breadNo: result[0].bread_no,
-        breadName: result[0].bread_name,
+      data: {
+        bread_no: result[0].bread_no,
+        bread_name: result[0].bread_name,
       },
       contentLocation: `api/v1/pet/bread/${breadNo}`,
     });
@@ -54,15 +54,15 @@ exports.findBreadByBreadNo = async (req, res, next) => {
 /* 견종 등록 - 김종완 */
 exports.createBread = async (req, res, next) => {
   try {
-    const breadName = req.body.breadName;
+    const breadName = req.body.bread_name;
     const result = await BreadService.createBread(breadName);
     console.log(result);
 
     res.status(HttpStatus.CREATED).send({
       status: HttpStatus.CREATED,
       message: "정상적으로 등록되었습니다.",
-      result: {
-        breadNo: result.insertId,
+      data: {
+        bread_no: result.insertId,
       },
     });
   } catch (err) {
@@ -107,7 +107,6 @@ exports.deleteBread = async (req, res, next) => {
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
       message: "성공적으로 삭제되었습니다.",
-      result: [],
     });
   } catch (err) {
     err.links = [

@@ -77,7 +77,7 @@ exports.createDiary = async (req, res, next) => {
       req.body.diary_content,
       req.body.fodder_name,
       req.body.pet_health,
-      req.files[0].path,
+      req.files[0].pathc,
       req.files[1].path,
       req.files[2].path,
       req.files[3].path,

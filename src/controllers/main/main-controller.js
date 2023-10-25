@@ -33,6 +33,7 @@ exports.findMainPage = async (req, res, next) => {
       });
     }
   } catch (err) {
+    console.error(err);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
       status: HttpStatus.INTERNAL_SERVER_ERROR,
       message: err.message,

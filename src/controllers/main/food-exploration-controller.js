@@ -9,7 +9,7 @@ exports.findPetJoinProgram = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
     const memberNo = JwtDecoder.getMemberNoFromToken(token);
-    const petNo = await PetService.findPetByMemberNo(memberNo).then(
+    const petNo = await PetService.findPetsByMemberNo(memberNo).then(
       (pet) => pet[0].pet_no
     );
     const result = await FoodExplorationService.findPetJoinProgram(petNo);
