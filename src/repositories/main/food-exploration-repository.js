@@ -46,3 +46,26 @@ exports.findParticipationProgram = (connection, petNo, programNo) => {
     );
   });
 };
+
+/* 미참여 프로그램 조회하는 메소드 - 조만제 */
+exports.findNonParticipationProgram = (connection, petNo, programNo) => {
+  return new Promise((resolve, reject) => {
+    connection.query(
+      FoodExplorationQuery.findNonParticipationProgram(),
+      [petNo, programNo],
+      (err, result) => {
+        // 에러 발생 시
+        if (err) {
+          console.log("error: " + err);
+          reject(err);
+        }
+        // 빈 결과 조회
+        if (result.length === 0) {
+          resolve(result);
+        }
+        // 정상 조회 시
+        resolve(result);
+      }
+    );
+  });
+};
