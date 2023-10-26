@@ -41,6 +41,6 @@ exports.insertPetAllergyProgram = () => {
     INSERT INTO tbl_pet_program(PPG_program_no, PPG_pet_no, PPG_program_name, PPG_pet_program_result)
     VALUES(?, ?, (SELECT PRO_PROGRAM_NAME
     FROM TBL_PROGRAM
-    WHERE PRO_PROGRAM_NO = ?), 4);
+    WHERE PRO_PROGRAM_NO = ?), 5);
   `;
 };
