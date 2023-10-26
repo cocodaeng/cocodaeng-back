@@ -21,7 +21,7 @@ exports.findPetsByMemberNo = (memberNo) => {
 
       // 조회 실패 시
       if (!result) {
-        const error = new Error("회원 조회 실패");
+        const error = new Error("조회 실패");
         error.status = HttpStatus.BAD_REQUEST;
         reject(error);
       }

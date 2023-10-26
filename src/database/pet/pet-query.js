@@ -3,11 +3,11 @@
 /* 회원 번호로 펫 조회하는 메소드 - 조만제 */
 exports.findPetsByMemberNo = () => {
   return `
-                  SELECT * 
-                  FROM TBL_PETS
-                  WHERE member_no = ?
-                  AND pet_status = 1;
-              `;
+    SELECT * 
+    FROM TBL_PETS
+    WHERE PET_member_no = ?
+    AND PET_pet_status = 1;
+  `;
 };
 
 // 펫 등록
