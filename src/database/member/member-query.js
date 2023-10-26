@@ -5,8 +5,8 @@ exports.findMemberByMemberNo = () => {
   return `
                 SELECT * 
                 FROM TBL_MEMBER
-                WHERE member_no = ?
-                AND member_status = 'T';
+                WHERE MEM_member_no = ?
+                AND MEM_member_status = 'T';
             `;
 };
 
@@ -15,8 +15,8 @@ exports.findMemberByKakaoId = () => {
   return `
               SELECT * 
               FROM TBL_MEMBER
-              WHERE kakao_id = ?
-              AND member_status = 'T';
+              WHERE MEM_kakao_id = ?
+              AND MEM_member_status = 'T';
           `;
 };
 
@@ -24,8 +24,8 @@ exports.findMemberByKakaoId = () => {
 exports.registMember = () => {
   return `
             INSERT INTO TBL_MEMBER(
-              member_name,
-              kakao_id)
+              MEM_member_name,
+              MEM_kakao_id)
             VALUES(?,?);
         `;
 };
