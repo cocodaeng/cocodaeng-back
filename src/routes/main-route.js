@@ -15,4 +15,18 @@ router.get(
   FoodExplorationController.findPetJoinProgram
 );
 
+/* 기참여 프로그램 조회 - 조만제 */
+router.get(
+  "/foodExplorationPage/participation/:program_no",
+  auth,
+  FoodExplorationController.findParticipationProgram
+);
+
+/* 미참여 프로그램 조회 - 조만제 */
+router.get(
+  "/foodExplorationPage/nonparticipation/:program_no",
+  auth,
+  FoodExplorationController.findNonParticipationProgram
+);
+
 module.exports = router;

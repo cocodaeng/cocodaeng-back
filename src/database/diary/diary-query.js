@@ -3,34 +3,34 @@
 /* 다이어리 전체 조회 메소드 - 조만제 */
 exports.findDiariesByPetNo = () => {
   return `
-            SELECT * 
-            FROM TBL_DIARY
-            WHERE pet_no = ?
-            AND diary_status = 1;
-        `;
+    SELECT * 
+    FROM TBL_DIARY
+    WHERE DIR_pet_no = ?
+    AND DIR_diary_status = 1;
+  `;
 };
 
 /* 다이어리 번호로 다이어리 조회 - 김종완 */
 exports.findDiaryByDiaryNo = () => {
   return `
-      SELECT diary_no
-           , pet_no
-           , pet_program_no
-           , diary_content
-           , fodder_name
-           , pet_health
-           , diary_photo_left_eye
-           , diary_photo_right_eye
-           , diary_photo_left_ear
-           , diary_photo_right_ear
-           , diary_photo_anal
-           , diary_photo_etc
-           , create_date
-           , update_date
-           , diary_status
+      SELECT DIR_diary_no
+           , DIR_pet_no
+           , DIR_pet_program_no
+           , DIR_diary_content
+           , DIR_fodder_name
+           , DIR_pet_health
+           , DIR_diary_photo_left_eye
+           , DIR_diary_photo_right_eye
+           , DIR_diary_photo_left_ear
+           , DIR_diary_photo_right_ear
+           , DIR_diary_photo_anal
+           , DIR_diary_photo_etc
+           , DIR_create_date
+           , DIR_update_date
+           , DIR_diary_status
         FROM TBL_DIARY
-       WHERE diary_no = ?
-         AND diary_status =1
+       WHERE DIR_diary_no = ?
+         AND DIR_diary_status =1
   `;
 };
 
@@ -39,18 +39,18 @@ exports.createDiary = () => {
   return `
       INSERT INTO TBL_DIARY
       (
-        pet_no,
-        pet_program_no,
-        diary_content,
-        fodder_name,
-        pet_health,
-        diary_photo_left_eye,
-        diary_photo_right_eye,
-        diary_photo_left_ear,
-        diary_photo_right_ear,
-        diary_photo_anal,
-        diary_photo_etc,
-        create_date
+        DIR_pet_no,
+        DIR_pet_program_no,
+        DIR_diary_content,
+        DIR_fodder_name,
+        DIR_pet_health,
+        DIR_diary_photo_left_eye,
+        DIR_diary_photo_right_eye,
+        DIR_diary_photo_left_ear,
+        DIR_diary_photo_right_ear,
+        DIR_diary_photo_anal,
+        DIR_diary_photo_etc,
+        DIR_create_date
       )
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
@@ -61,19 +61,19 @@ exports.updateDiary = () => {
   return `
       UPDATE TBL_DIARY
         SET
-          pet_no = ?,
-          pet_program_no = ?,
-          diary_content = ?,
-          fodder_name = ?,
-          pet_health = ?,
-          diary_photo_left_eye = ?,
-          diary_photo_right_eye = ?,
-          diary_photo_left_ear = ?,
-          diary_photo_right_ear = ?,
-          diary_photo_anal = ?,
-          diary_photo_etc = ?,
-          update_date = ?
-        WHERE diary_no = ?
+        DIR_pet_no = ?,
+        DIR_pet_program_no = ?,
+        DIR_diary_content = ?,
+        DIR_fodder_name = ?,
+        DIR_pet_health = ?,
+        DIR_diary_photo_left_eye = ?,
+        DIR_diary_photo_right_eye = ?,
+        DIR_diary_photo_left_ear = ?,
+        DIR_diary_photo_right_ear = ?,
+        DIR_diary_photo_anal = ?,
+        DIR_diary_photo_etc = ?,
+        DIR_update_date = ?
+        WHERE DIR_diary_no = ?
   `;
 };
 
@@ -82,7 +82,7 @@ exports.deleteDiary = () => {
   return `
       UPDATE TBL_DIARY
          SET
-          diary_status = ?
-       WHERE diary_no = ?
+         DIR_diary_status = ?
+       WHERE DIR_diary_no = ?
   `;
 };

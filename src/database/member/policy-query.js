@@ -3,7 +3,7 @@ exports.findPolicyConsent = () => {
   return `
         SELECT policy_consent
           FROM TBL_MEMBER
-         WHERE member_no = ?
+         WHERE MEM_member_no = ?
     `;
 };
 
@@ -12,6 +12,6 @@ exports.updatePolicyConsent = () => {
   return `
       UPDATE TBL_MEMBER
          SET policy_consent =?
-       WHERE member_no =?
+       WHERE MEM_member_no =?
     `;
 };

@@ -56,12 +56,12 @@ async function insertPetAllergyProgram(connection, petNo) {
   for (let i = 0; i < programAllergy.length; i++) {
     for (let j = 0; j < petAllergy.length; j++) {
       if (
-        programAllergy[i].ALLERGY_INGREDIENT_NAME ===
-          petAllergy[j].ALLERGY_INGREDIENT_NAME &&
-        checkNum !== programAllergy[i].PROGRAM_NO
+        programAllergy[i].AGI_ALLERGY_INGREDIENT_NAME ===
+          petAllergy[j].AGI_ALLERGY_INGREDIENT_NAME &&
+        checkNum !== programAllergy[i].PGA_PROGRAM_NO
       ) {
-        checkNum = programAllergy[i].PROGRAM_NO;
-        allergyProgramNo.push(programAllergy[i].PROGRAM_NO);
+        checkNum = programAllergy[i].PGA_PROGRAM_NO;
+        allergyProgramNo.push(programAllergy[i].PGA_PROGRAM_NO);
         break;
       }
     }

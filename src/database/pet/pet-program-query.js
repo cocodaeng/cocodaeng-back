@@ -5,6 +5,6 @@ exports.findPetProgramsByPetNo = () => {
   return `
           SELECT * 
             FROM TBL_PET_PROGRAM
-           WHERE pet_no = ?;
+           WHERE PET_pet_no = ?;
         `;
 };
