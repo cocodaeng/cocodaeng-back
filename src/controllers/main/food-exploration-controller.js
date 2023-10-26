@@ -34,7 +34,7 @@ exports.findPetJoinProgram = async (req, res, next) => {
   }
 };
 
-/* 기참여 프로그램 조회하는 메소드 - 조만제 */
+/* 기 참여 프로그램 조회하는 메소드 - 조만제 */
 exports.findParticipationProgram = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
@@ -51,7 +51,7 @@ exports.findParticipationProgram = async (req, res, next) => {
     if (result) {
       res.status(HttpStatus.OK).send({
         status: HttpStatus.OK,
-        message: "기참여 프로그램 조회 성공",
+        message: "기 참여 프로그램 조회 성공",
         data: result,
       });
     }
@@ -68,7 +68,7 @@ exports.findParticipationProgram = async (req, res, next) => {
   }
 };
 
-/* 미참여 프로그램 조회하는 메소드 - 조만제 */
+/* 미 참여 프로그램 조회하는 메소드 - 조만제 */
 exports.findNonParticipationProgram = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
@@ -85,7 +85,7 @@ exports.findNonParticipationProgram = async (req, res, next) => {
     if (result) {
       res.status(HttpStatus.OK).send({
         status: HttpStatus.OK,
-        message: "기참여 프로그램 조회 성공",
+        message: "미 참여 프로그램 조회 성공",
         data: result,
       });
     }

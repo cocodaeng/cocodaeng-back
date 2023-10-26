@@ -32,7 +32,7 @@ exports.findPetJoinProgram = (petNo) => {
   });
 };
 
-/* 기참여 프로그램 조회하는 메소드 - 조만제 */
+/* 기 참여 프로그램 조회하는 메소드 - 조만제 */
 exports.findParticipationProgram = (petNo, programNo) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();
@@ -62,7 +62,7 @@ exports.findParticipationProgram = (petNo, programNo) => {
   });
 };
 
-/* 기참여 프로그램 조회하는 메소드 - 조만제 */
+/* 미 참여 프로그램 조회하는 메소드 - 조만제 */
 exports.findNonParticipationProgram = (petNo, programNo) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();

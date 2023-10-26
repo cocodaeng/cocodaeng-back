@@ -12,7 +12,7 @@ exports.findPetJoinProgram = () => {
     `;
 };
 
-/* 기참여 프로그램 조회하는 메소드 - 조만제 */
+/* 기 참여 프로그램 조회하는 메소드 - 조만제 */
 exports.findParticipationProgram = () => {
   return `
     SELECT PPG_PROGRAM_NAME, PPG_PET_PROGRAM_RESULT, PRO_DIET, PRO_FODDER, DIR_CREATE_DATE, DIR_PET_HEALTH, DIR_DIARY_CONTENT
@@ -29,7 +29,7 @@ exports.findParticipationProgram = () => {
   `;
 };
 
-/* 미참여 프로그램 조회하는 메소드 - 조만제 */
+/* 미 참여 프로그램 조회하는 메소드 - 조만제 */
 exports.findNonParticipationProgram = () => {
   return `
     SELECT PPG_PROGRAM_NAME, PPG_PET_PROGRAM_RESULT, PRO_DIET, PRO_FODDER, PRO_FODDER_LINK, SNP_SNACK_NAME
