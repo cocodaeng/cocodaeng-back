@@ -18,7 +18,8 @@ router.delete("/bread/:bread_no", auth, BreadController.deleteBread);
 router.get("/", auth, PetController.findPetsByMemberNo);
 router.post("/", auth, PetController.createPet);
 
-/* 특정 펫 진행 프로그램 전체 조회 라우터 - 조만제 */
+/* 특정 펫 진행 프로그램 전체 조회 라우터 - 조만제, 김종완*/
 router.get("/findPetPrograms", PetProgramController.findPetProgramsByPetNo);
+router.get("/getStartEndDate", PetProgramController.getStartEndDate);
 
 module.exports = router;
