@@ -34,6 +34,7 @@ exports.findPetsByMemberNo = (memberNo) => {
   });
 };
 
+/* 신규 펫 등록 메소드 - 김종완 */
 exports.createPet = (petDTO) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();

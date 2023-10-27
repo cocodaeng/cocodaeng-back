@@ -4,60 +4,48 @@ const BreadService = require("../../services/pet/bread-service");
 
 // 견종 전체 조회
 exports.findAllBreads = async (req, res, next) => {
-  const result = await BreadService.findAllBreads();
-  console.log(result);
-  if (result) {
+  try {
+    const result = await BreadService.findAllBreads();
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
       message: "정상적으로 조회되었습니다.",
       result: result,
       contentLocation: "api/v1/pet/bread",
     });
-  }
-  if (!result) {
-    res.status(HttpStatus.BAD_REQUEST).send({
-      status: HttpStatus.BAD_REQUEST,
-      message: "조회에 실패하였습니다.",
-      result: [],
-      links: [
-        {
-          rel: "findAllBreads",
-          method: "GET",
-          href: `api/v1/pet/bread`,
-        },
-      ],
-    });
+  } catch (err) {
+    err.links = [
+      {
+        rel: "findAllBreads",
+        method: "GET",
+        href: `api/v1/pet/bread`,
+      },
+    ];
+    next(err);
   }
 };
 
 // 견종 조회
 exports.findBreadByBreadNo = async (req, res, next) => {
-  const breadNo = req.params.breadNo;
-  const result = await BreadService.findBreadByBreadNo(breadNo);
-  if (result) {
-    res.status(HttpStatus.OK).send({
-      status: HttpStatus.OK,
-      message: "성공적으로 조회되었습니다.",
-      data: {
-        bread_no: result[0].bread_no,
-        bread_name: result[0].bread_name,
+  const breadNo = req.params.bread_no;
+  try {
+    const result = await BreadService.findBreadByBreadNo(breadNo);
+    if (result) {
+      res.status(HttpStatus.OK).send({
+        status: HttpStatus.OK,
+        message: "성공적으로 조회되었습니다.",
+        data: result[0],
+        contentLocation: `api/v1/pet/bread/${breadNo}`,
+      });
+    }
+  } catch (err) {
+    err.links = [
+      {
+        rel: "findBreadByBreadNo",
+        method: "GET",
+        href: `api/v1/pet/bread/${breadNo}`,
       },
-      contentLocation: `api/v1/pet/bread/${breadNo}`,
-    });
-  }
-  if (!result) {
-    res.status(HttpStatus.BAD_REQUEST).send({
-      status: HttpStatus.BAD_REQUEST,
-      message: "조회에 실패하였습니다.",
-      result: [],
-      links: [
-        {
-          rel: "findBreadByBreadNo",
-          method: "GET",
-          href: `api/v1/pet/bread/${breadNo}`,
-        },
-      ],
-    });
+    ];
+    next(err);
   }
 };
 
@@ -72,7 +60,7 @@ exports.createBread = async (req, res, next) => {
         status: HttpStatus.CREATED,
         message: "정상적으로 등록되었습니다.",
         result: {
-          breadNo: result.insertId,
+          BRD_bread_no: result.insertId,
         },
       });
     }
@@ -109,7 +97,7 @@ exports.createBread = async (req, res, next) => {
 
 // 견종 수정
 exports.updateBread = async (req, res, next) => {
-  const breadDTO = new BreadDTO(req.params.breadNo, req.body.breadName);
+  const breadDTO = new BreadDTO(req.params.bread_no, req.body.bread_name);
   try {
     const result = await BreadService.updateBread(breadDTO);
     console.log(result);
@@ -128,7 +116,7 @@ exports.updateBread = async (req, res, next) => {
           {
             rel: "updateBread",
             method: "PUT",
-            href: `api/v1/pet/bread/${req.params.breadNo}`,
+            href: `api/v1/pet/bread/${req.params.bread_no}`,
           },
         ],
       });
@@ -142,7 +130,7 @@ exports.updateBread = async (req, res, next) => {
         {
           rel: "updateBread",
           method: "PUT",
-          href: `api/v1/pet/bread/${req.params.breadNo}`,
+          href: `api/v1/pet/bread/${req.params.bread_no}`,
         },
       ],
     });
@@ -151,7 +139,7 @@ exports.updateBread = async (req, res, next) => {
 
 // 견종 삭제
 exports.deleteBread = async (req, res, next) => {
-  const breadNo = req.params.breadNo;
+  const breadNo = req.params.bread_no;
   try {
     const result = await BreadService.deleteBread(breadNo);
     if (result) {
@@ -169,7 +157,7 @@ exports.deleteBread = async (req, res, next) => {
         {
           rel: "deleteBread",
           method: "DELETE",
-          href: `api/v1/pet/bread/${req.params.breadNo}`,
+          href: `api/v1/pet/bread/${req.params.bread_no}`,
         },
       ],
     });

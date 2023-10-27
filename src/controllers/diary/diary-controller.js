@@ -37,23 +37,7 @@ exports.findDiaryByDiaryNo = async (req, res, next) => {
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
       message: "성공적으로 조회되었습니다.",
-      data: {
-        diary_no: result[0].diary_no,
-        pet_no: result[0].pet_no,
-        pet_program_no: result[0].pet_program_no,
-        diary_content: result[0].diary_content,
-        fodder_name: result[0].fodder_name,
-        pet_health: result[0].pet_health,
-        diary_photo_left_eye: result[0].diary_photo_left_eye,
-        diary_photo_right_eye: result[0].diary_photo_right_eye,
-        diary_photo_left_ear: result[0].diary_photo_left_ear,
-        diary_photo_right_ear: result[0].diary_photo_right_ear,
-        diary_photo_anal: result[0].diary_photo_anal,
-        diary_photo_etc: result[0].diary_photo_etc,
-        create_date: result[0].create_date,
-        update_date: result[0].update_date,
-        diary_status: result[0].diary_status,
-      },
+      data: result[0],
     });
   } catch (err) {
     err.links = [

@@ -10,8 +10,9 @@ exports.findPetProgramsByPetNo = async (req, res, next) => {
     const token = req.headers.authorization;
     const memberNo = JwtDecode.getMemberNoFromToken(token);
     const petNo = await PetService.findPetsByMemberNo(memberNo).then(
-      (pet) => pet[0].pet_no
+      (pet) => pet[0].PET_pet_no
     );
+    console.log(petNo);
     const result = await PetProgramService.findPetProgramsByPetNo(petNo);
 
     let pet_programs = [];
@@ -46,3 +47,6 @@ exports.findPetProgramsByPetNo = async (req, res, next) => {
     next(err);
   }
 };
+
+/* 펫 진행 프로그램 시작-종료일 조회 - 김종완 */
+exports.getStartEndDate = async (req, res, next) => {};

@@ -14,17 +14,7 @@ exports.findPetsByMemberNo = async (req, res, next) => {
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
       message: "펫 조회 성공",
-      pet: {
-        pet_no: result[0].pet_no,
-        member_no: result[0].member_no,
-        bread_no: result[0].bread_no,
-        pet_name: result[0].pet_name,
-        pet_profile_picture: result[0].pet_profile_picture,
-        pet_age: result[0].pet_age,
-        pet_weight: result[0].pet_weight,
-        create_date: result[0].create_date,
-        pet_status: result[0].pet_status,
-      },
+      pet: result[0],
     });
   } catch (err) {
     err.links = [

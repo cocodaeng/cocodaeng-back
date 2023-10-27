@@ -38,7 +38,7 @@ exports.findBreadByBreadNo = (breadNo) => {
         resolve(result);
       }
       if (!result) {
-        const error = new Error("견종 조회에 실패하였습니다.");
+        const error = new Error("일치하는 견종이 없습니다.");
         error.status = HttpStatus.BAD_REQUEST;
         reject(error);
       }
@@ -95,7 +95,7 @@ exports.updateBread = (breadDTO) => {
       }
       if (result.affectedRows === 0) {
         connection.rollback();
-        const error = new Error("견종 수정에 실패하였습니다.");
+        const error = new Error("일치하는 견종이 없습니다.");
         error.status = HttpStatus.BAD_REQUEST;
         reject(error);
       }
@@ -126,7 +126,7 @@ exports.deleteBread = (breadNo) => {
       // 삭제 실패 시
       if (result.affectedRows === 0) {
         connection.rollback();
-        const error = new Error("견종 삭제에 실패하였습니다.");
+        const error = new Error("일치하는 견종이 없습니다.");
         error.status = HttpStatus.BAD_REQUEST;
         reject(error);
       }
