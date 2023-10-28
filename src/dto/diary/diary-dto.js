@@ -50,7 +50,6 @@ class DiaryDTO {
   }
 
   static fromCreateDiary = (
-    diaryNo,
     petNo,
     petProgramNo,
     diaryContent,
@@ -64,7 +63,7 @@ class DiaryDTO {
     diaryPhotoEtc
   ) => {
     return new DiaryDTO(
-      diaryNo,
+      null,
       petNo,
       petProgramNo,
       diaryContent,

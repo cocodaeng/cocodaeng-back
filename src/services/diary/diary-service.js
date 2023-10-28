@@ -1,7 +1,7 @@
 /* 다이어리 서비스 */
 const getConnection = require("../../database/connection");
 const DiaryRepository = require("../../repositories/diary/diary-repository");
-const DiaryDTO = require("../../dto/diary-dto");
+const DiaryDTO = require("../../dto/diary/diary-dto");
 const HttpStatus = require("http-status");
 
 // 조회 실패 메세지

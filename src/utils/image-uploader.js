@@ -1,12 +1,17 @@
-const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const HttpStatus = require("http-status");
+const { S3Client } = require("@aws-sdk/client-s3");
+const { Upload } = require("@aws-sdk/lib-storage"); // 다중 업로드를 위해 PutObjectCommand 대신 lib-storage 사용
 const multer = require("multer");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const s3Client = new S3Client({
   region: "ap-northeast-2",
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    accessKeyId: process.env.AWS_ACCESS_KEY,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
 });
@@ -17,69 +22,56 @@ const allowedExtensions = [".png", ".jpg", ".jpeg", ".bmp"];
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-// ImageUploader.singleOrArray = (field, maxCount) => {
-//   const middleware = upload.fields([{ name: field, maxCount }]);
-//   return (req, res, next) => {
-//     middleware(req, res, (err) => {
-//       if (err) {
-//         return next(err);
-//       }
-//       if (!req.files || !req.files[field]) {
-//         req.files = null;
-//       }
-//       next();
-//     });
-//   };
-// };
+const createImageUploader = (directory, fields) => {
+  const ImageUploader = upload.fields(fields);
 
-// ImageUploader.uploadToS3 = async (req, res, next) => {
-//   try {
-//     const token = req.headers.authorization;
-//     const memberNo = jwtDecode.getMemberNoFromToken(token);
+  const uploadToS3 = async (req, res, next) => {
+    try {
+      let files = [];
+      for (let field in req.files) {
+        files.push(req.files[field]);
+      }
+      console.log("이미지 업로더 속 files 설정", files);
 
-//     let files = [];
-//     // 다중 이미지 업로드인 경우
-//     if (Array.isArray(req.files)) {
-//       files = req.files;
-//     }
-//     // 단일 이미지 업로드인 경우
-//     if (req.file) {
-//       files = [req.file];
-//     }
-//     // 이미지가 첨부가 안되었을 경우
-//     if (files.length === 0) {
-//       throw new Error("이미지 파일이 존재하지 않습니다.");
-//     }
+      if (files.length === 0) {
+        const error = new Error("이미지 파일이 존재하지 않습니다.");
+        error.status = HttpStatus.BAD_REQUEST;
+        next(error);
+      }
 
-//     const uploadedImageURLs = [];
+      for (const file of files) {
+        console.log(file[0].originalname);
+        const extension = path.extname(file[0].originalname);
 
-//     for (const file of files) {
-//       const extension = path.extname(file.originalname);
-//       if (!allowedExtensions.includes(extension)) {
-//         throw new Error("이미지 형식 파일이 아닙니다.");
-//       }
+        if (!allowedExtensions.includes(extension)) {
+          const error = new Error("이미지 형식의 파일만 업로드 가능합니다.");
+          error.status = HttpStatus.BAD_REQUEST;
+          next(error);
+        }
 
-//       const key = `${memberNo}_${uuidv4()}${extension}`;
+        const key = `${directory}/${uuidv4()}${extension}`;
 
-//       const params = {
-//         Bucket: "bucket", // S3 버켓 이름
-//         key: key,
-//         Body: file.buffer,
-//         ACL: "public-read-write",
-//       };
+        const params = {
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Key: key,
+          Body: file[0].buffer,
+          ACL: "public-read-write",
+        };
 
-//       await s3Client.send(new PutObjectCommand(params));
+        const uploader = new Upload({ client: s3Client, params: params });
+        await uploader.done();
 
-//       uploadedImageURLs.push(
-//         `https://YOUR_BUCKET_NAME.s3.ap-northeast-2.amazonaws.com/${key}`
-//       );
-//     }
+        const url = `https://${process.env.AWS_BUCKET_NAME}.s3.ap-northeast-2.amazonaws.com/${key}`;
+        file[0].path = url;
+      }
 
-//     req.petProfilePicture = uploadedImageURLs;
-//     next();
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+      next();
+    } catch (err) {
+      next(err);
+    }
+  };
 
-// module.exports = ImageUploader;
+  return [ImageUploader, uploadToS3];
+};
+
+module.exports.createImageUploader = createImageUploader;
