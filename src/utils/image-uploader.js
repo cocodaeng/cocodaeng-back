@@ -5,6 +5,7 @@ const multer = require("multer");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
 const dotenv = require("dotenv");
+const JwtDecode = require("../utils/jwt-decoder");
 
 dotenv.config();
 
@@ -27,6 +28,9 @@ const createImageUploader = (directory, fields) => {
 
   const uploadToS3 = async (req, res, next) => {
     try {
+      const token = req.headers.authorization;
+      const memberNo = JwtDecode.getMemberNoFromToken(token);
+
       let files = [];
       for (let field in req.files) {
         files.push(req.files[field]);
@@ -49,7 +53,10 @@ const createImageUploader = (directory, fields) => {
           next(error);
         }
 
-        const key = `${directory}/${uuidv4()}${extension}`;
+        const date = new Date().toISOString().split("T")[0];
+        const key = `${directory}/${file[0].fieldname}/${uuidv4()}_${date}_${
+          file[0].fieldname
+        }${extension}`;
 
         const params = {
           Bucket: process.env.AWS_BUCKET_NAME,
