@@ -10,7 +10,7 @@ exports.findPetJoinProgram = async (req, res, next) => {
     const token = req.headers.authorization;
     const memberNo = JwtDecoder.getMemberNoFromToken(token);
     const petNo = await PetService.findPetsByMemberNo(memberNo).then(
-      (pet) => pet[0].pet_no
+      (pet) => pet[0].PET_pet_no
     );
     const result = await FoodExplorationService.findPetJoinProgram(petNo);
     // 조회 성공 시

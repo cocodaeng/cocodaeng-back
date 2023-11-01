@@ -10,26 +10,9 @@ exports.findPetProgramsByPetNo = async (req, res, next) => {
     const token = req.headers.authorization;
     const memberNo = JwtDecode.getMemberNoFromToken(token);
     const petNo = await PetService.findPetsByMemberNo(memberNo).then(
-      (pet) => pet[0].pet_no
+      (pet) => pet[0].PET_pet_no
     );
     const result = await PetProgramService.findPetProgramsByPetNo(petNo);
-
-    let pet_programs = [];
-
-    for (let i = 0; i < result.length; i++) {
-      pet_programs[i] = {
-        pet_program_no: result[i].pet_program_no,
-        program_no: result[i].program_no,
-        pet_no: result[i].pet_no,
-        program_name: result[i].program_name,
-        pet_start_date: result[i].pet_start_date,
-        pet_end_date: result[i].pet_end_date,
-        pet_seventh_date: result[i].pet_seventh_date,
-        pet_fourteenth_date: result[i].pet_fourteenth_date,
-        program_result: result[i].program_result,
-      };
-    }
-
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
       message: "특정 펫 진행 프로그램 전체 조회 성공",
