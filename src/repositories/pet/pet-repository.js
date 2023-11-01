@@ -30,6 +30,7 @@ exports.createPet = (connection, petDTO) => {
         petDTO.breadNo,
         petDTO.petName,
         petDTO.petProfilePicture,
+        petDTO.petAge,
         petDTO.petWeight,
         petDTO.createDate,
         petDTO.petStatus,

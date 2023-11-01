@@ -14,8 +14,8 @@ router.post("/bread", auth, BreadController.createBread);
 router.put("/bread/:bread_no", auth, BreadController.updateBread);
 router.delete("/bread/:bread_no", auth, BreadController.deleteBread);
 
-const PetProfileUploader = createImageUploader("pet-profile", [
-  { name: "profile", maxCount: 1 },
+const PetProfileUploader = createImageUploader("pet", [
+  { name: "pet_profile", maxCount: 1 },
 ]);
 
 /* 펫 라우터 - 조만제, 김종완 */
