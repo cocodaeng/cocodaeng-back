@@ -1,5 +1,5 @@
 const HttpStatus = require("http-status");
-const BreadDTO = require("../../dto/pet/request/bread-dto");
+const BreadDTO = require("../../dto/bread-dto");
 const BreadService = require("../../services/pet/bread-service");
 
 /* 전체 견종 조회 - 김종완 */
@@ -33,10 +33,7 @@ exports.findBreadByBreadNo = async (req, res, next) => {
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
       message: "성공적으로 조회되었습니다.",
-      result: {
-        breadNo: result[0].bread_no,
-        breadName: result[0].bread_name,
-      },
+      data: result[0],
       contentLocation: `api/v1/pet/bread/${breadNo}`,
     });
   } catch (err) {
@@ -54,15 +51,15 @@ exports.findBreadByBreadNo = async (req, res, next) => {
 /* 견종 등록 - 김종완 */
 exports.createBread = async (req, res, next) => {
   try {
-    const breadName = req.body.breadName;
+    const breadName = req.body.bread_name;
     const result = await BreadService.createBread(breadName);
     console.log(result);
 
     res.status(HttpStatus.CREATED).send({
       status: HttpStatus.CREATED,
       message: "정상적으로 등록되었습니다.",
-      result: {
-        breadNo: result.insertId,
+      data: {
+        BRD_bread_no: result.insertId,
       },
     });
   } catch (err) {
@@ -107,7 +104,7 @@ exports.deleteBread = async (req, res, next) => {
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
       message: "성공적으로 삭제되었습니다.",
-      result: [],
+      data: [],
     });
   } catch (err) {
     err.links = [

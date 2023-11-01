@@ -1,7 +1,7 @@
 /* 다이어리 컨트롤러 */
 const DiaryService = require("../../services/diary/diary-service");
 const HttpStatus = require("http-status");
-const DiaryDTO = require("../../dto/diary/diary-dto");
+const DiaryDTO = require("../../dto/diary-dto");
 
 /* 다이어리 전체 조회 메소드 - 조만제 */
 exports.findDiaries = async (req, res, next) => {
@@ -54,29 +54,35 @@ exports.findDiaryByDiaryNo = async (req, res, next) => {
 /* 다이어리 신규 등록 - 김종완 */
 exports.createDiary = async (req, res, next) => {
   try {
-    console.log(req);
-    console.log(req.files.diary_photo_left_ear[0]);
-
     const createDTO = DiaryDTO.fromCreateDiary(
       req.body.pet_no,
       req.body.pet_program_no,
       req.body.diary_content,
       req.body.fodder_name,
       req.body.pet_health,
-      req.files.diary_photo_left_eye[0].path || null,
-      req.files.diary_photo_right_eye[0].path || null,
-      req.files.diary_photo_left_ear[0].path || null,
-      req.files.diary_photo_right_ear[0].path || null,
-      req.files.diary_photo_anal[0].path || null,
-      req.files.diary_photo_etc[0].path || null
+      req.files.diary_photo_left_eye
+        ? req.files.diary_photo_left_eye[0].path
+        : null,
+      req.files.diary_photo_right_eye
+        ? req.files.diary_photo_right_eye[0].path
+        : null,
+      req.files.diary_photo_left_ear
+        ? req.files.diary_photo_left_ear[0].path
+        : null,
+      req.files.diary_photo_right_ear
+        ? req.files.diary_photo_right_ear[0].path
+        : null,
+      req.files.diary_photo_anal ? req.files.diary_photo_anal[0].path : null,
+      req.files.diary_photo_etc ? req.files.diary_photo_etc[0].path : null
     );
     const result = await DiaryService.createDiary(createDTO);
+    console.log(result);
     // 등록 성공 시
     res.status(HttpStatus.CREATED).send({
       status: HttpStatus.CREATED,
       message: "정상적으로 등록되었습니다.",
       data: {
-        diary_no: result.insertId,
+        DIR_diary_no: result.insertId,
       },
     });
   } catch (err) {
@@ -102,12 +108,20 @@ exports.updateDiary = async (req, res, next) => {
       req.body.diary_content,
       req.body.fodder_name,
       req.body.pet_health,
-      req.files[0].path,
-      req.files[1].path,
-      req.files[2].path,
-      req.files[3].path,
-      req.files[4].path,
-      req.files[5].path,
+      req.files.diary_photo_left_eye
+        ? req.files.diary_photo_left_eye[0].path
+        : null,
+      req.files.diary_photo_right_eye
+        ? req.files.diary_photo_right_eye[0].path
+        : null,
+      req.files.diary_photo_left_ear
+        ? req.files.diary_photo_left_ear[0].path
+        : null,
+      req.files.diary_photo_right_ear
+        ? req.files.diary_photo_right_ear[0].path
+        : null,
+      req.files.diary_photo_anal ? req.files.diary_photo_anal[0].path : null,
+      req.files.diary_photo_etc ? req.files.diary_photo_etc[0].path : null,
       req.body.create_date,
       req.body.diary_status
     );
