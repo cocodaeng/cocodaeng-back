@@ -9,17 +9,48 @@ class PetDTO {
   createDate;
   petStatus;
 
-  constructor(data) {
-    this.petNo = data.petNo;
-    this.memberNo = data.memberNo;
-    this.breadNo = data.breadNo;
-    this.petName = data.petName;
-    this.petProfilePicture = data.petProfilePicture;
-    this.petAge = data.petAge;
-    this.petWeight = data.petWeight;
-    this.createDate = new Date(data.createDate);
-    this.petStatus = data.petStatus;
+  constructor(
+    petNo,
+    memberNo,
+    breadNo,
+    petName,
+    petProfilePicture,
+    petAge,
+    petWeight,
+    createDate,
+    petStatus
+  ) {
+    this.petNo = petNo;
+    this.memberNo = memberNo;
+    this.breadNo = breadNo;
+    this.petName = petName;
+    this.petProfilePicture = petProfilePicture;
+    this.petAge = petAge;
+    this.petWeight = petWeight;
+    this.createDate = createDate;
+    this.petStatus = petStatus;
   }
+
+  static fromCreatePet = (
+    memberNo,
+    breadNo,
+    petName,
+    petProfilePicture,
+    petAge,
+    petWeight
+  ) => {
+    return new PetDTO(
+      null,
+      memberNo,
+      breadNo,
+      petName,
+      petProfilePicture,
+      petAge,
+      petWeight,
+      new Date(),
+      1
+    );
+  };
 }
 
 module.exports = PetDTO;

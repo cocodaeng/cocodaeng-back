@@ -1,7 +1,7 @@
 /* 다이어리 컨트롤러 */
 const DiaryService = require("../../services/diary/diary-service");
 const HttpStatus = require("http-status");
-const DiaryDTO = require("../../dto/diary/diary-dto");
+const DiaryDTO = require("../../dto/diary-dto");
 
 /* 다이어리 전체 조회 메소드 - 조만제 */
 exports.findDiaries = async (req, res, next) => {
@@ -37,23 +37,7 @@ exports.findDiaryByDiaryNo = async (req, res, next) => {
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
       message: "성공적으로 조회되었습니다.",
-      data: {
-        diary_no: result[0].diary_no,
-        pet_no: result[0].pet_no,
-        pet_program_no: result[0].pet_program_no,
-        diary_content: result[0].diary_content,
-        fodder_name: result[0].fodder_name,
-        pet_health: result[0].pet_health,
-        diary_photo_left_eye: result[0].diary_photo_left_eye,
-        diary_photo_right_eye: result[0].diary_photo_right_eye,
-        diary_photo_left_ear: result[0].diary_photo_left_ear,
-        diary_photo_right_ear: result[0].diary_photo_right_ear,
-        diary_photo_anal: result[0].diary_photo_anal,
-        diary_photo_etc: result[0].diary_photo_etc,
-        create_date: result[0].create_date,
-        update_date: result[0].update_date,
-        diary_status: result[0].diary_status,
-      },
+      data: result[0],
     });
   } catch (err) {
     err.links = [
@@ -71,26 +55,34 @@ exports.findDiaryByDiaryNo = async (req, res, next) => {
 exports.createDiary = async (req, res, next) => {
   try {
     const createDTO = DiaryDTO.fromCreateDiary(
-      req.body.diary_no,
       req.body.pet_no,
       req.body.pet_program_no,
       req.body.diary_content,
       req.body.fodder_name,
       req.body.pet_health,
-      req.files[0].path,
-      req.files[1].path,
-      req.files[2].path,
-      req.files[3].path,
-      req.files[4].path,
-      req.files[5].path
+      req.files.diary_photo_left_eye
+        ? req.files.diary_photo_left_eye[0].path
+        : null,
+      req.files.diary_photo_right_eye
+        ? req.files.diary_photo_right_eye[0].path
+        : null,
+      req.files.diary_photo_left_ear
+        ? req.files.diary_photo_left_ear[0].path
+        : null,
+      req.files.diary_photo_right_ear
+        ? req.files.diary_photo_right_ear[0].path
+        : null,
+      req.files.diary_photo_anal ? req.files.diary_photo_anal[0].path : null,
+      req.files.diary_photo_etc ? req.files.diary_photo_etc[0].path : null
     );
     const result = await DiaryService.createDiary(createDTO);
+    console.log(result);
     // 등록 성공 시
     res.status(HttpStatus.CREATED).send({
       status: HttpStatus.CREATED,
       message: "정상적으로 등록되었습니다.",
       data: {
-        diary_no: result.insertId,
+        DIR_diary_no: result.insertId,
       },
     });
   } catch (err) {
@@ -116,12 +108,20 @@ exports.updateDiary = async (req, res, next) => {
       req.body.diary_content,
       req.body.fodder_name,
       req.body.pet_health,
-      req.files[0].path,
-      req.files[1].path,
-      req.files[2].path,
-      req.files[3].path,
-      req.files[4].path,
-      req.files[5].path,
+      req.files.diary_photo_left_eye
+        ? req.files.diary_photo_left_eye[0].path
+        : null,
+      req.files.diary_photo_right_eye
+        ? req.files.diary_photo_right_eye[0].path
+        : null,
+      req.files.diary_photo_left_ear
+        ? req.files.diary_photo_left_ear[0].path
+        : null,
+      req.files.diary_photo_right_ear
+        ? req.files.diary_photo_right_ear[0].path
+        : null,
+      req.files.diary_photo_anal ? req.files.diary_photo_anal[0].path : null,
+      req.files.diary_photo_etc ? req.files.diary_photo_etc[0].path : null,
       req.body.create_date,
       req.body.diary_status
     );

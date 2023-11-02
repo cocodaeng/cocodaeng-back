@@ -9,13 +9,11 @@ exports.findPetProgramsByPetNo = (connection, petNo) => {
       [petNo],
       (err, result) => {
         if (err) {
-          console.log("error: " + err);
           reject(err);
         }
         if (result.length === 0) {
           resolve(null);
         }
-        console.log("result" + result);
         resolve(result);
       }
     );

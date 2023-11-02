@@ -9,7 +9,7 @@ exports.findMainPage = (memberNo) => {
   return new Promise(async (resolve, reject) => {
     const connection = getConnection();
     try {
-      const petResult = await PetRepository.findPetByMemberNo(
+      const petResult = await PetRepository.findPetsByMemberNo(
         connection,
         memberNo
       );
@@ -20,7 +20,7 @@ exports.findMainPage = (memberNo) => {
         reject(error);
       }
       // 펫 조회 성공 시
-      const petNo = petResult[0].pet_no;
+      const petNo = petResult[0].PET_pet_no;
       await insertPetAllergyProgram(connection, petNo);
 
       let nowDate = new Date();

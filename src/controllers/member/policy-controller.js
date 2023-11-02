@@ -22,9 +22,7 @@ exports.findPolicyConsent = async (req, res, next) => {
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
       message: "정상적으로 조회되었습니다.",
-      data: {
-        policy_consent: result[0].policy_consent,
-      },
+      data: result[0],
     });
   } catch (err) {
     err.links = [

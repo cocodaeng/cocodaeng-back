@@ -14,17 +14,7 @@ exports.findPetsByMemberNo = async (req, res, next) => {
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
       message: "펫 조회 성공",
-      pet: {
-        pet_no: result[0].pet_no,
-        member_no: result[0].member_no,
-        bread_no: result[0].bread_no,
-        pet_name: result[0].pet_name,
-        pet_profile_picture: result[0].pet_profile_picture,
-        pet_age: result[0].pet_age,
-        pet_weight: result[0].pet_weight,
-        create_date: result[0].create_date,
-        pet_status: result[0].pet_status,
-      },
+      data: result[0],
     });
   } catch (err) {
     err.links = [
@@ -42,24 +32,29 @@ exports.findPetsByMemberNo = async (req, res, next) => {
 exports.createPet = async (req, res, next) => {
   const token = req.headers.authorization;
   const memberNo = JwtDecode.getMemberNoFromToken(token);
-  const petProfilePicture = req.files;
+  const petProfilePicture = req.files.pet_profile
+    ? req.files.pet_profile[0].path
+    : null;
   const petDTO = new PetDTO(
+    null,
     memberNo,
-    req.body.breadNo,
-    req.body.petName,
+    req.body.bread_no,
+    req.body.pet_name,
     petProfilePicture,
-    req.body.petAge,
-    req.body.petWeight,
-    req.body.createDate,
-    req.body.petStatus
+    req.body.pet_age,
+    req.body.pet_weight,
+    new Date(),
+    1
   );
-
+  console.log(petDTO);
   try {
     const result = await PetService.createPet(petDTO);
     res.status(HttpStatus.CREATED).send({
       status: HttpStatus.CREATED,
       message: "정상적으로 등록되었습니다.",
-      result: [],
+      data: {
+        PET_pet_no: result.insertId,
+      },
     });
   } catch (err) {
     err.links = [
