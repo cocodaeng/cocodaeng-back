@@ -4,36 +4,116 @@ class DiaryDTO {
   petProgramNo;
   diaryContent;
   fodderName;
-  createDate;
-  petStatus;
+  petHealth;
   diaryPhotoLeftEye;
   diaryPhotoRightEye;
   diaryPhotoLeftEar;
   diaryPhotoRightEar;
   diaryPhotoAnal;
   diaryPhotoEtc;
+  createDate;
   updateDate;
-  deleteDate;
-  deleteStatus;
+  diarytStatus;
 
-  constructor(data) {
-    this.diaryNo = data.diaryNo;
-    this.petNo = data.petNo;
-    this.petProgramNo = data.petProgramNo;
-    this.diaryContent = data.diaryContent;
-    this.fodderName = data.fodderName;
-    this.createDate = data.createDate;
-    this.petStatus = data.petStatus;
-    this.diaryPhotoLeftEye = data.diaryPhotoLeftEye;
-    this.diaryPhotoRightEye = data.diaryPhotoRightEye;
-    this.diaryPhotoLeftEar = data.diaryPhotoLeftEar;
-    this.diaryPhotoRightEar = data.diaryPhotoRightEar;
-    this.diaryPhotoAnal = data.diaryPhotoAnal;
-    this.diaryPhotoEtc = data.diaryPhotoEtc;
-    this.updateDate = data.updateDate;
-    this.deleteDate = data.deleteDate;
-    this.deleteStatus = data.deleteStatus;
+  constructor(
+    diaryNo,
+    petNo,
+    petProgramNo,
+    diaryContent,
+    fodderName,
+    petHealth,
+    diaryPhotoLeftEye,
+    diaryPhotoRightEye,
+    diaryPhotoLeftEar,
+    diaryPhotoRightEar,
+    diaryPhotoAnal,
+    diaryPhotoEtc,
+    createDate,
+    updateDate,
+    diarytStatus
+  ) {
+    this.diaryNo = diaryNo;
+    this.petNo = petNo;
+    this.petProgramNo = petProgramNo;
+    this.diaryContent = diaryContent;
+    this.fodderName = fodderName;
+    this.petHealth = petHealth;
+    this.diaryPhotoLeftEye = diaryPhotoLeftEye;
+    this.diaryPhotoRightEye = diaryPhotoRightEye;
+    this.diaryPhotoLeftEar = diaryPhotoLeftEar;
+    this.diaryPhotoRightEar = diaryPhotoRightEar;
+    this.diaryPhotoAnal = diaryPhotoAnal;
+    this.diaryPhotoEtc = diaryPhotoEtc;
+    this.createDate = createDate;
+    this.updateDate = updateDate;
+    this.diarytStatus = diarytStatus;
   }
-}
 
+  static fromCreateDiary = (
+    petNo,
+    petProgramNo,
+    diaryContent,
+    fodderName,
+    petHealth,
+    diaryPhotoLeftEye,
+    diaryPhotoRightEye,
+    diaryPhotoLeftEar,
+    diaryPhotoRightEar,
+    diaryPhotoAnal,
+    diaryPhotoEtc
+  ) => {
+    return new DiaryDTO(
+      null,
+      petNo,
+      petProgramNo,
+      diaryContent,
+      fodderName,
+      petHealth,
+      diaryPhotoLeftEye,
+      diaryPhotoRightEye,
+      diaryPhotoLeftEar,
+      diaryPhotoRightEar,
+      diaryPhotoAnal,
+      diaryPhotoEtc,
+      new Date(),
+      null,
+      1
+    );
+  };
+
+  static fromUpdateDiary = (
+    diaryNo,
+    petNo,
+    petProgramNo,
+    diaryContent,
+    fodderName,
+    petHealth,
+    diaryPhotoLeftEye,
+    diaryPhotoRightEye,
+    diaryPhotoLeftEar,
+    diaryPhotoRightEar,
+    diaryPhotoAnal,
+    diaryPhotoEtc,
+    createDate,
+    diarytStatus
+  ) => {
+    return new DiaryDTO(
+      diaryNo,
+      petNo,
+      petProgramNo,
+      diaryContent,
+      fodderName,
+      petHealth,
+      diaryPhotoLeftEye,
+      diaryPhotoRightEye,
+      diaryPhotoLeftEar,
+      diaryPhotoRightEar,
+      diaryPhotoAnal,
+      diaryPhotoEtc,
+      createDate,
+      new Date(),
+      diarytStatus
+    );
+  };
+}
 module.exports = DiaryDTO;
