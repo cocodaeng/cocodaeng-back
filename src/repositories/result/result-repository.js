@@ -50,7 +50,7 @@ exports.updateResult = (connection, resultDTO) => {
   return new Promise((resolve, reject) => {
     connection.query(
       ResultQuery.updateResult(),
-      [resultDTO.programResult, resultDTO.petNo, resultDTO.programNo],
+      [resultDTO.programResult, resultDTO.petProgramNo],
       (err, result) => {
         // 에러 발생 시
         if (err) {

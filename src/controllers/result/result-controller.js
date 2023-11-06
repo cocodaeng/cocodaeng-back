@@ -5,9 +5,9 @@ const ResultDTO = require("../../dto/result-dto");
 
 /* 최종 결과(시작일 - 종료일) 조회 - 김종완*/
 exports.findFinalResult = async (req, res, next) => {
-  const { petNo, programNo } = req.query;
+  const { pet_no, program_no } = req.query;
   try {
-    const resultDTO = new ResultDTO(petNo, programNo, null);
+    const resultDTO = ResultDTO.findResult(pet_no, program_no);
     const result = await ResultService.findFinalResult(resultDTO);
     // 조회 성공 시
     res.status(HttpStatus.OK).send({
@@ -30,9 +30,9 @@ exports.findFinalResult = async (req, res, next) => {
 
 /* 최종 결과 전체 기록 조회 - 김종완 */
 exports.findAllResults = async (req, res, next) => {
-  const { petNo, programNo } = req.query;
+  const { pet_no, program_no } = req.query;
   try {
-    const resultDTO = new ResultDTO(petNo, programNo, null);
+    const resultDTO = ResultDTO.findResult(pet_no, program_no);
     const result = await ResultService.findAllResults(resultDTO);
     // 조회 성공 시
     res.status(HttpStatus.OK).send({
@@ -55,10 +55,14 @@ exports.findAllResults = async (req, res, next) => {
 
 /* 최종 결과 업데이트 - 김종완 */
 exports.updateResult = async (req, res, next) => {
-  const { petNo, programNo, programResult } = req.query;
+  const petProgramNo = req.params.pet_program_no;
+  console.log(petProgramNo);
+  const programResult = req.body.program_result;
+  console.log(programResult);
   try {
-    const resultDTO = new ResultDTO(petNo, programNo, programResult);
-    const result = await ResultService.createResult(resultDTO);
+    const resultDTO = ResultDTO.updateResult(petProgramNo, programResult);
+    console.log(resultDTO);
+    const result = await ResultService.updateResult(resultDTO);
     // 결과 업데이트 성공 시
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
