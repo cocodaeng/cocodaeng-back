@@ -16,6 +16,7 @@ const kakaoRouter = require("./src/routes/kakao-route");
 const petRouter = require("./src/routes/pet-route");
 const allergyRouter = require("./src/routes/allergy-route");
 const diaryRouter = require("./src/routes/diary-route");
+const resultRouter = require("./src/routes/result-route");
 
 app.use("/api/v1/main", mainRouter);
 app.use("/api/v1/member", memberRouter);
@@ -24,6 +25,7 @@ app.use("/api/v1/oauth/kakao", kakaoRouter);
 app.use("/api/v1/pet", petRouter);
 app.use("/api/v1/allergy", allergyRouter);
 app.use("/api/v1/diary", diaryRouter);
+app.use("/api/v1/result", resultRouter);
 
 app.listen(9000, () => console.log("Listening on port 9000!"));
 
