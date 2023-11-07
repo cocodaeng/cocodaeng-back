@@ -4,10 +4,12 @@ const { Upload } = require("@aws-sdk/lib-storage"); // 다중 업로드를 위�
 const multer = require("multer");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
-const dotenv = require("dotenv");
 const JwtDecode = require("../utils/jwt-decoder");
-
-dotenv.config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+// const dotenv = require("dotenv");
+// dotenv.config();
 
 const s3Client = new S3Client({
   region: "ap-northeast-2",

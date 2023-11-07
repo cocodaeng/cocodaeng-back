@@ -1,7 +1,10 @@
 /* DB Configuration */
-const dotenv = require("dotenv");
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+// const dotenv = require("dotenv");
 
-dotenv.config();
+// dotenv.config();
 
 module.exports = {
   host: process.env.RDS_HOSTNAME,
