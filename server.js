@@ -18,10 +18,6 @@ const allergyRouter = require("./src/routes/allergy-route");
 const diaryRouter = require("./src/routes/diary-route");
 const resultRouter = require("./src/routes/result-route");
 
-app.use("/", (req, res) => {
-  res.send("Hello, world!");
-});
-
 app.use("/api/v1/main", mainRouter);
 app.use("/api/v1/member", memberRouter);
 app.use("/api/v1/oauth/apple", appleRouter);
@@ -32,6 +28,10 @@ app.use("/api/v1/diary", diaryRouter);
 app.use("/api/v1/result", resultRouter);
 
 app.listen(9000, () => console.log("Listening on port 9000!"));
+
+// app.use("/", (req, res) => {
+//   res.send("Hello, world!");
+// });
 
 app.use((err, req, res, next) => {
   let statusCode = err.status || HttpStatus.INTERNAL_SERVER_ERROR; // 기본값으로 500을 사용

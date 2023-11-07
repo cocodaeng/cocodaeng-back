@@ -1,5 +1,8 @@
 /* 토큰 검증 미들웨어 */
 const jwt = require("jsonwebtoken");
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 const SECRET_KEY = process.env.SECRET_KEY;
 
 /* 토큰 검증하는 미들웨어 메소드 - 조만제 */
