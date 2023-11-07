@@ -18,6 +18,10 @@ const allergyRouter = require("./src/routes/allergy-route");
 const diaryRouter = require("./src/routes/diary-route");
 const resultRouter = require("./src/routes/result-route");
 
+app.use("/", (req, res) => {
+  res.send("Hello, world!");
+});
+
 app.use("/api/v1/main", mainRouter);
 app.use("/api/v1/member", memberRouter);
 app.use("/api/v1/oauth/apple", appleRouter);
