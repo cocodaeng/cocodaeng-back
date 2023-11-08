@@ -33,8 +33,8 @@ app.listen(8080, () => console.log("Listening on port 8080!"));
 
 /* 공용 에러 핸들러 - 김종완 */
 app.use((err, req, res, next) => {
-  let statusCode = err.status || HttpStatus.INTERNAL_SERVER_ERROR; // 기본값으로 500을 사용
   console.error(err);
+  let statusCode = err.status || HttpStatus.INTERNAL_SERVER_ERROR; // 기본값으로 500을 사용
   res.status(statusCode).json({
     status: statusCode,
     message: err.message,

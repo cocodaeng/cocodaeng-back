@@ -52,6 +52,7 @@ exports.findMainPage = (connection, petNo, targetMonth) => {
 /* 알러지 유발하는 식재료 있는 프로그램을 결과 나쁨으로 세팅하는 메소드 - 조만제 */
 exports.insertPetAllergyProgram = (connection, allergyProgramNo, petNo) => {
   return new Promise((resolve, reject) => {
+    console.log("asdfasd");
     console.log(allergyProgramNo);
     connection.query(
       MainQuery.insertPetAllergyProgram(),

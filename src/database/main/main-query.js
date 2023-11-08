@@ -38,7 +38,7 @@ exports.findProgramAllergy = () => {
 /* 알러지 유발하는 식재료 있는 프로그램을 결과 나쁨으로 세팅하는 메소드 - 조만제 */
 exports.insertPetAllergyProgram = () => {
   return `
-    INSERT INTO tbl_pet_program(PPG_program_no, PPG_pet_no, PPG_program_name, PPG_pet_program_result)
+    INSERT INTO TBL_PET_PROGRAM(PPG_program_no, PPG_pet_no, PPG_program_name, PPG_pet_program_result)
     VALUES(?, ?, (SELECT PRO_PROGRAM_NAME
     FROM TBL_PROGRAM
     WHERE PRO_PROGRAM_NO = ?), 5);
