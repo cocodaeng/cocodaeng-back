@@ -27,11 +27,11 @@ app.use("/api/v1/allergy", allergyRouter);
 app.use("/api/v1/diary", diaryRouter);
 app.use("/api/v1/result", resultRouter);
 
-app.listen(9000, () => console.log("Listening on port 9000!"));
+app.listen(8080, () => console.log("Listening on port 8080!"));
 
 app.use((err, req, res, next) => {
-  let statusCode = err.status || HttpStatus.INTERNAL_SERVER_ERROR; // 기본값으로 500을 사용
   console.error(err);
+  let statusCode = err.status || HttpStatus.INTERNAL_SERVER_ERROR; // 기본값으로 500을 사용
   res.status(statusCode).json({
     status: statusCode,
     message: err.message,

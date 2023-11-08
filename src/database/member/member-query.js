@@ -29,3 +29,15 @@ exports.registMember = () => {
             VALUES(?,?);
         `;
 };
+
+/* 애플 회원 가입 메소드 - 김종완 */
+exports.registAppleMember = () => {
+  return `
+    INSERT INTO TBL_MEMBER
+    (
+      MEM_member_name,
+      MEM_apple_id
+    )
+    VALUES(?,?)
+  `;
+};

@@ -39,7 +39,7 @@ exports.findParticipationProgram = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
     const memberNo = JwtDecoder.getMemberNoFromToken(token);
-    const petNo = await PetService.findPetsByMemberNo(1).then(
+    const petNo = await PetService.findPetsByMemberNo(memberNo).then(
       (pet) => pet[0].PET_pet_no
     );
     const programNo = req.params.program_no;
@@ -73,7 +73,7 @@ exports.findNonParticipationProgram = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
     const memberNo = JwtDecoder.getMemberNoFromToken(token);
-    const petNo = await PetService.findPetsByMemberNo(1).then(
+    const petNo = await PetService.findPetsByMemberNo(memberNo).then(
       (pet) => pet[0].PET_pet_no
     );
     const programNo = req.params.program_no;
