@@ -20,6 +20,7 @@ const PetProfileUploader = createImageUploader("pet", [
 
 /* 펫 라우터 - 조만제, 김종완 */
 router.get("/", auth, PetController.findPetsByMemberNo);
+router.get("/:pet_no", auth, PetController.findPetByPetNo);
 router.post(
   "/",
   auth,
