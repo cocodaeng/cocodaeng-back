@@ -36,10 +36,6 @@ exports.findParticipationProgram = (connection, petNo, programNo) => {
           console.log("error: " + err);
           reject(err);
         }
-        // 빈 결과 조회
-        if (result.length === 0) {
-          resolve(result);
-        }
         // 정상 조회 시
         resolve(result);
       }

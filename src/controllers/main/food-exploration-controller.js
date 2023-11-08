@@ -9,7 +9,7 @@ exports.findPetJoinProgram = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
     const memberNo = JwtDecoder.getMemberNoFromToken(token);
-    const petNo = await PetService.findPetsByMemberNo(memberNo).then(
+    const petNo = await PetService.findPetsByMemberNo(1).then(
       (pet) => pet[0].PET_pet_no
     );
     const result = await FoodExplorationService.findPetJoinProgram(petNo);
@@ -59,7 +59,7 @@ exports.findParticipationProgram = async (req, res, next) => {
     // 조회 실패 시
     err.links = [
       {
-        rel: "findPetJoinProgram",
+        rel: "findParticipationProgram",
         method: "GET",
         href: "api/v1/main/foodExplorationPage",
       },
@@ -93,7 +93,7 @@ exports.findNonParticipationProgram = async (req, res, next) => {
     // 조회 실패 시
     err.links = [
       {
-        rel: "findPetJoinProgram",
+        rel: "findNonParticipationProgram",
         method: "GET",
         href: "api/v1/main/foodExplorationPage",
       },
