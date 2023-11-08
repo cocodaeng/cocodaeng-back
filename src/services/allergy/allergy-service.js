@@ -13,7 +13,7 @@ exports.findAllAllergies = () => {
         resolve(result);
       }
       if (!result) {
-        const error = new Error("조회에 실패하였습니다.");
+        const error = new Error("알러지 유발 식재료 조회에 실패하였습니다.");
         error.status = HttpStatus.BAD_REQUEST;
         reject(error);
       }
