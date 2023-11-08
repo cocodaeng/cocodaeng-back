@@ -65,3 +65,24 @@ exports.findNonParticipationProgram = (connection, petNo, programNo) => {
     );
   });
 };
+
+/* 미 참여 프로그램 시작 - 조만제 */
+exports.startParticipationProgram = (
+  connection,
+  petNo,
+  programNo,
+  programName
+) => {
+  return new Promise((resolve, reject) => {
+    connection.query(
+      FoodExplorationQuery.startParticipationProgram(),
+      [programNo, petNo, programName],
+      (err, result) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(result);
+      }
+    );
+  });
+};

@@ -44,3 +44,11 @@ exports.findNonParticipationProgram = () => {
     AND PRO_PROGRAM_STATUS = 1;
   `;
 };
+
+/* 미 참여 프로그램 시작 - 조만제 */
+exports.startParticipationProgram = () => {
+  return `
+    INSERT INTO TBL_PET_PROGRAM(PPG_program_no, PPG_pet_no, PPG_program_name, PPG_pet_end_date, PPG_pet_program_result) 
+    VALUES (?,?,?,DATE(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 21 DAY)),1);
+  `;
+};
