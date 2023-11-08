@@ -92,3 +92,38 @@ exports.findNonParticipationProgram = (petNo, programNo) => {
     }
   });
 };
+
+/* 미 참여 프로그램 시작 - 조만제 */
+exports.startParticipationProgram = (petNo, programNo, programName) => {
+  return new Promise(async (resolve, reject) => {
+    const connection = getConnection();
+    try {
+      const result = await FoodExplorationRepository.startParticipationProgram(
+        connection,
+        petNo,
+        programNo,
+        programName
+      );
+
+      // 성공 시
+      if (result.affectedRows > 0) {
+        connection.commit();
+        resolve(result);
+      }
+
+      // 실패 시
+      if (result.affectedRows === 0) {
+        connection.rollback();
+        const error = new Error("실패하였습니다.");
+        error.status = HttpStatus.BAD_REQUEST;
+        reject(error);
+      }
+    } catch (err) {
+      // 에러 발생 시
+      connection.rollback();
+      reject(err);
+    } finally {
+      connection.end();
+    }
+  });
+};

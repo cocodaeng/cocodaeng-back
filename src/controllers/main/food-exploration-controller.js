@@ -61,7 +61,7 @@ exports.findParticipationProgram = async (req, res, next) => {
       {
         rel: "findParticipationProgram",
         method: "GET",
-        href: "api/v1/main/foodExplorationPage",
+        href: "api/v1/main/foodExplorationPage/participation",
       },
     ];
     next(err);
@@ -95,7 +95,38 @@ exports.findNonParticipationProgram = async (req, res, next) => {
       {
         rel: "findNonParticipationProgram",
         method: "GET",
-        href: "api/v1/main/foodExplorationPage",
+        href: "api/v1/main/foodExplorationPage/nonparticipation",
+      },
+    ];
+    next(err);
+  }
+};
+
+/* 미 참여 프로그램 시작 - 조만제 */
+exports.startParticipationProgram = async (req, res, next) => {
+  try {
+    const petNo = req.body.pet_no;
+    const programNo = req.body.program_no;
+    const programName = req.body.program_name;
+    const result = await FoodExplorationService.startParticipationProgram(
+      petNo,
+      programNo,
+      programName
+    );
+
+    res.status(HttpStatus.CREATED).send({
+      status: HttpStatus.CREATED,
+      message: "정상적으로 등록되었습니다.",
+      data: {
+        PPG_pet_program_no: result.insertId,
+      },
+    });
+  } catch (err) {
+    err.links = [
+      {
+        rel: "startParticipationProgram",
+        method: "POST",
+        href: "api/v1/main/foodExplorationPage/startParticipation",
       },
     ];
     next(err);

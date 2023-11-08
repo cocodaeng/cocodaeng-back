@@ -29,4 +29,11 @@ router.get(
   FoodExplorationController.findNonParticipationProgram
 );
 
+/* 미 참여 프로그램 시작 - 조만제 */
+router.post(
+  "/foodExplorationPage/startParticipation",
+  auth,
+  FoodExplorationController.startParticipationProgram
+);
+
 module.exports = router;
