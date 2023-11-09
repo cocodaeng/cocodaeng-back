@@ -7,7 +7,7 @@ exports.appleLogin = async (req, res, next) => {
   try {
     //authenticate our code we recieved from apple login with our key file
     const result = await AppleService.appleLogin(req.body.code, req.body.user);
-    res.satus(HttpStatus.OK).send({
+    res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,
       message: "애플 로그인에 성공하였습니다.",
       data: result[0],
