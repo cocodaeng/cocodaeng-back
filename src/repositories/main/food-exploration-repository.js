@@ -36,10 +36,6 @@ exports.findParticipationProgram = (connection, petNo, programNo) => {
           console.log("error: " + err);
           reject(err);
         }
-        // 빈 결과 조회
-        if (result.length === 0) {
-          resolve(result);
-        }
         // 정상 조회 시
         resolve(result);
       }
@@ -64,6 +60,27 @@ exports.findNonParticipationProgram = (connection, petNo, programNo) => {
           resolve(result);
         }
         // 정상 조회 시
+        resolve(result);
+      }
+    );
+  });
+};
+
+/* 미 참여 프로그램 시작 - 조만제 */
+exports.startParticipationProgram = (
+  connection,
+  petNo,
+  programNo,
+  programName
+) => {
+  return new Promise((resolve, reject) => {
+    connection.query(
+      FoodExplorationQuery.startParticipationProgram(),
+      [programNo, petNo, programName],
+      (err, result) => {
+        if (err) {
+          reject(err);
+        }
         resolve(result);
       }
     );

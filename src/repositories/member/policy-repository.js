@@ -4,7 +4,7 @@ const PolicyQuery = require("../../database/member/policy-query");
 exports.findPolicyConsent = (connection, memberNo) => {
   return new Promise((resolve, reject) => {
     connection.query(
-      PolicyQuery.findPolicyConsent(memberNo),
+      PolicyQuery.findPolicyConsent(),
       [memberNo],
       (err, result) => {
         if (err) {

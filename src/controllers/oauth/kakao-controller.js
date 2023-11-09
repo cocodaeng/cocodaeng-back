@@ -31,6 +31,3 @@ exports.kakaoCallBack = (req, res) => {
     });
   }
 };
-
-// 카카오 로그아웃
-// exports.kakaoLogout = async (req, res) => {};

@@ -32,14 +32,23 @@ exports.findParticipationProgram = () => {
 /* 미 참여 프로그램 조회하는 메소드 - 조만제 */
 exports.findNonParticipationProgram = () => {
   return `
-    SELECT PPG_PROGRAM_NAME, PPG_PET_PROGRAM_RESULT, PRO_DIET, PRO_FODDER, PRO_FODDER_LINK, SNP_SNACK_NAME
+    SELECT PPG_PROGRAM_NAME, PPG_PET_PROGRAM_RESULT, PRO_DIET, PRO_FODDER, PRO_FODDER_LINK, PSN_SNACK_NAME
     FROM TBL_PET_PROGRAM
     LEFT JOIN TBL_PROGRAM
     ON PPG_PROGRAM_NO = PRO_PROGRAM_NO
-    LEFT JOIN TBL_SNACK_PROGRAM
-    ON PRO_PROGRAM_NO = SNP_PROGRAM_NO
+    LEFT JOIN TBL_PROGRAM_SNACK
+    ON PRO_PROGRAM_NO = PSN_PROGRAM_NO
     WHERE PPG_PET_NO = ?
     AND PPG_PROGRAM_NO = ?
+    AND PPG_PET_PROGRAM_RESULT = 0
     AND PRO_PROGRAM_STATUS = 1;
+  `;
+};
+
+/* 미 참여 프로그램 시작 - 조만제 */
+exports.startParticipationProgram = () => {
+  return `
+    INSERT INTO TBL_PET_PROGRAM(PPG_program_no, PPG_pet_no, PPG_program_name, PPG_pet_end_date, PPG_pet_program_result) 
+    VALUES (?,?,?,DATE(DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 21 DAY)),1);
   `;
 };

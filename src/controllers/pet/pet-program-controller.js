@@ -9,9 +9,11 @@ exports.findPetProgramsByPetNo = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
     const memberNo = JwtDecode.getMemberNoFromToken(token);
+    console.log(memberNo);
     const petNo = await PetService.findPetsByMemberNo(memberNo).then(
       (pet) => pet[0].PET_pet_no
     );
+    console.log(petNo);
     const result = await PetProgramService.findPetProgramsByPetNo(petNo);
     res.status(HttpStatus.OK).send({
       status: HttpStatus.OK,

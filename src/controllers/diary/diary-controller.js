@@ -99,7 +99,6 @@ exports.createDiary = async (req, res, next) => {
 
 /* 다이어리 수정 - 김종완 */
 exports.updateDiary = async (req, res, next) => {
-  console.log(req);
   try {
     const updateDTO = DiaryDTO.fromUpdateDiary(
       req.params.diary_no,

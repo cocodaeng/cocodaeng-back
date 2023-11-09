@@ -13,7 +13,7 @@ exports.findAllBreads = () => {
       }
       if (!result) {
         const error = new Error("전체 견종 조회에 실패하였습니다.");
-        error.status = HttpStatus.BAD_REQUEST;
+        error.status = HttpStatus.INTERNAL_SERVER_ERROR;
         reject(error);
       }
     } catch (err) {

@@ -13,6 +13,7 @@ exports.findMemberByMemberNo = (memberNo) => {
         connection,
         memberNo
       );
+      console.log(result);
       if (result) {
         // 조회 성공 시
         resolve(result);
