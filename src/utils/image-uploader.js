@@ -33,6 +33,10 @@ const createImageUploader = (directory, fields) => {
       const token = req.headers.authorization;
       const memberNo = JwtDecode.getMemberNoFromToken(token);
 
+      if (!req.files) {
+        next();
+      }
+
       let files = [];
       for (let field in req.files) {
         files.push(req.files[field]);
@@ -40,7 +44,9 @@ const createImageUploader = (directory, fields) => {
       console.log("이미지 업로더 속 files 설정", files);
 
       if (files.length === 0) {
-        const error = new Error("이미지 파일이 존재하지 않습니다.");
+        const error = new Error(
+          "펫 상태를 기록하기 위해 사진을 최소 한 장 이상 업로드해주세요."
+        );
         error.status = HttpStatus.BAD_REQUEST;
         next(error);
       }

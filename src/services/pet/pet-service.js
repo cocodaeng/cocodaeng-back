@@ -6,6 +6,7 @@ const PetRepository = require("../../repositories/pet/pet-repository");
 /* 회원 번호로 펫 조회하는 메소드 - 조만제 */
 exports.findPetsByMemberNo = (memberNo) => {
   return new Promise(async (resolve, reject) => {
+    console.log(memberNo);
     const connection = getConnection();
     try {
       const result = await PetRepository.findPetsByMemberNo(
@@ -99,13 +100,23 @@ exports.createPetAllergies = (allergyDTO) => {
         allergyDTO
       );
       // 등록 성공 시
-      if (result.affectedRows === allergyListLength) {
-        connection.commit();
-        resolve(result);
+      if (result.affectedRows) {
+        if (result.affectedRows === allergyListLength) {
+          connection.commit();
+          resolve(result);
+        }
+
+        // 알러지가 다 등록되지 않았을 때
+        if (result.affectedRows < allergyListLength) {
+          connection.rollback();
+          const error = new Error("알러지 등록에 실패하였습니다.");
+          error.status = HttpStatus.BAD_REQUEST;
+          reject(error);
+        }
       }
+
       // 등록 실패 시
-      if (result.affectedRows < allergyListLength) {
-        connection.rollback();
+      if (!result.affectedRows) {
         const error = new Error("알러지 등록에 실패하였습니다.");
         error.status = HttpStatus.BAD_REQUEST;
         reject(error);

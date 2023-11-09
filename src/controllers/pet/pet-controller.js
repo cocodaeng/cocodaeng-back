@@ -57,7 +57,9 @@ exports.createPet = async (req, res, next) => {
   const petProfilePicture = req.files.pet_profile
     ? req.files.pet_profile[0].path
     : null;
-  const allergyIngredientNoList = req.body.allergy_ingredient_no_list;
+  const allergyIngredientNoList = req.body.allergy_ingredient_no_list
+    ? req.body.allergy_ingredient_no_list
+    : null;
   console.log("알러지 리스트 : ", allergyIngredientNoList);
   const petDTO = new PetDTO(
     null,
@@ -77,14 +79,25 @@ exports.createPet = async (req, res, next) => {
       result.insertId,
       allergyIngredientNoList
     );
-    const allergyResult = await PetService.createPetAllergies(allergyDTO);
-    console.log(allergyResult);
+    let allergyResult = null;
+    if (allergyIngredientNoList) {
+      allergyResult = await PetService.createPetAllergies(allergyDTO);
+
+      console.log(allergyResult);
+      res.status(HttpStatus.CREATED).send({
+        status: HttpStatus.CREATED,
+        message: "정상적으로 등록되었습니다.",
+        data: {
+          PET_pet_no: result.insertId,
+          insertedPAG: allergyResult.affectedRows,
+        },
+      });
+    }
     res.status(HttpStatus.CREATED).send({
       status: HttpStatus.CREATED,
       message: "정상적으로 등록되었습니다.",
       data: {
         PET_pet_no: result.insertId,
-        insertedPAG: allergyResult.affectedRows,
       },
     });
   } catch (err) {
