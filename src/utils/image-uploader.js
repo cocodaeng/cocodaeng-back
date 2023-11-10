@@ -12,6 +12,7 @@ if (process.env.NODE_ENV !== "production") {
 // const dotenv = require("dotenv");
 // dotenv.config();
 
+/* s3 스토리지와 연동 설정 */
 const s3Client = new S3Client({
   region: "ap-northeast-2",
   credentials: {
@@ -22,10 +23,11 @@ const s3Client = new S3Client({
 
 const allowedExtensions = [".png", ".jpg", ".jpeg", ".bmp"];
 
-// Multer 설정
+// Multer(연결을 도와주는 라이브러리) 설정
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+/* 저장 경로와 필드 값을 구분 짓기 위해 메소드로 묶었습니다. */
 const createImageUploader = (directory, fields) => {
   const ImageUploader = upload.fields(fields);
 
@@ -45,6 +47,7 @@ const createImageUploader = (directory, fields) => {
       console.log("이미지 업로더 속 files 설정", files);
 
       if (files.length === 0) {
+        // 모든 사진 없을 시에 예외 처리
         const error = new Error(
           "펫 상태를 기록하기 위해 사진을 최소 한 장 이상 업로드해주세요."
         );
@@ -54,9 +57,10 @@ const createImageUploader = (directory, fields) => {
 
       for (const file of files) {
         console.log(file[0].originalname);
-        const extension = path.extname(file[0].originalname);
+        const extension = path.extname(file[0].originalname); // 이미지 확장자
 
         if (!allowedExtensions.includes(extension)) {
+          // 이미지 외 업로드 시 에러 처리
           const error = new Error("이미지 형식의 파일만 업로드 가능합니다.");
           error.status = HttpStatus.BAD_REQUEST;
           next(error);
@@ -65,7 +69,7 @@ const createImageUploader = (directory, fields) => {
         const date = new Date().toISOString().split("T")[0];
         const key = `${directory}/${file[0].fieldname}/${uuidv4()}_${date}_${
           file[0].fieldname
-        }${extension}`;
+        }${extension}`; // 파일 명
 
         const params = {
           Bucket: process.env.AWS_BUCKET_NAME,
