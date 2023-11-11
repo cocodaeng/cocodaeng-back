@@ -16,7 +16,7 @@ exports.kakaoLogin = (code) => {
 
   const kakaoToken = KakaoAPI.getKakaoToken(code); // 카카오 토큰
   console.log("kakaoToken : " + kakaoToken);
-  const kakaoMemberInfo = kakaoAPI.getKakaoMemberInfo(kakaoToken); // 카카오 회원 정보
+  const kakaoMemberInfo = KakaoAPI.getKakaoMemberInfo(kakaoToken); // 카카오 회원 정보
   console.log("kakaoMemberInfo : " + kakaoMemberInfo);
   const memberInfo = MemberService.registMember(kakaoMemberInfo);
   if (memberInfo !== null) {
@@ -30,6 +30,3 @@ exports.kakaoLogin = (code) => {
   }
   return null;
 };
-
-/* 카카오 로그아웃 메소드 - 조만제 */
-exports.kakaoLogout = () => {};
